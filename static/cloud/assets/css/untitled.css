@@ -1,0 +1,190 @@
+.hard-drive {
+  border: none;
+}
+
+.bg-gradient-primary {
+  background-color: #3cb6ea;
+  background-image: linear-gradient(180deg,#3cb6ea 10%,#0191cc);
+  background-size: cover;
+}
+
+.btn-blue {
+  background-color: rgb(92,207,254);
+}
+
+.fas.fa-search {
+  color: white;
+}
+
+img, svg {
+  height: 80px;
+}
+
+.form-control.border-0.small.bg-search {
+  background-color: rgb(232,233,238);
+}
+
+.typcn.typcn-arrow-left-thick {
+  font-size: 20px;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid #e3e6f0;
+  border-radius: .35rem;
+  height: 100%;
+}
+a, a:hover{
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.bg-login-image{
+  background-image: url('/static/cloud/assets/img/dogs/image3.jpeg');
+}
+
+body {font-family: Arial, Helvetica, sans-serif;}
+
+#myImg {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#myImg:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 2; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (image) */
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  height: 100%;
+}
+
+/* Caption of Modal Image */
+#caption {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: #ccc;
+  padding: 10px 0;
+  height: 150px;
+}
+
+/* Add Animation */
+.modal-content, #caption {  
+  -webkit-animation-name: zoom;
+  -webkit-animation-duration: 0.6s;
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+  from {-webkit-transform:scale(0)} 
+  to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+  from {transform:scale(0)} 
+  to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+  .modal-content {
+    width: 100%;
+  }
+}
+
+.btn-b{
+  background-color: #3cb6ea;
+  color: white;
+  transition: transform .2s; /* Animation */
+}
+
+.btn-b:hover{
+  background-color: #36a9da;
+  color: white;
+  transform: scale(1.2);
+}
+
+.btn-d{
+  background-color: #ea3c3c;
+  color: white;
+  transition: transform .2s; /* Animation */
+}
+
+.btn-d:hover{
+  background-color: #da3636;
+  color: white;
+  transform: scale(1.2);
+}
+
+.folder, h4{
+  color: rgba(0, 0, 0, 0.584);
+  transition: transform .2s; /* Animation */
+}
+
+.folder:hover{
+  transform: scale(1.1);
+  
+}
+
+.files, h4{
+  color: rgba(0, 0, 0, 0.584);
+  transition: transform .2s; /* Animation */
+}
+
+.files:hover{
+  transform: scale(1.1);
+}
+
+.show{
+  display: inline-block;
+}
+
+.hide{
+  display: none;
+}
