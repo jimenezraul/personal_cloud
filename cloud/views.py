@@ -111,7 +111,7 @@ def go_back_directory(request):
     user = request.user
     cloud = Cloud.objects.filter(user=user)[0]
     back = cloud.go_back()
-    cloud.save()
+    cloud.dir_save()
     instance = Cloud.objects.get(user=user)
     instance.current_dir = back
     instance.save()

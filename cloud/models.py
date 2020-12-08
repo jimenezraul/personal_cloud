@@ -133,7 +133,7 @@ class Cloud(models.Model):
         files = self.get_f_icon(folders['files'], icon)
         return files, folder
 
-    def save(self, *args, **kwargs):
+    def dir_save(self, *args, **kwargs):
         try:
             name = Cloud.objects.get(user=self.user)
             name.dir_name.save()
