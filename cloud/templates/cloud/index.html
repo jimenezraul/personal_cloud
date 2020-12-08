@@ -179,12 +179,17 @@
                                 <i class=""></i>
                                 <h6 class="text-primary font-weight-bold m-0">My Cloud</h6>
                                 {% endif %}
-                                
+                                {% if dir_name == "Trash" %}
+                                <div class="dropdown no-arrow">
+                                        
+                                </div>
+                                {% else %}
                                 <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
                                     <div class="dropdown-menu shadow dropdown-menu-right animated--fade-in">
                                         <p class="text-center dropdown-header">Files Options</p><a class="dropdown-item" onclick="showAndHide('.download')">&nbsp;Download</a><a class="dropdown-item" onclick="showAndHide('.delete')">&nbsp;Delete</a>
                                         </div>
                                 </div>
+                                {% endif %}
                             </div>
                             <div class="card-body">
                                 <div class="row">
@@ -211,11 +216,15 @@
                                                 <h4 class="text-center"><strong>{{ file.name }}</strong></h4>
                                                 </a>
                                                 <a class="download btn btn-b" style="display: none" href="{{ file.icon }}" download><i class="fas fa-cloud-download-alt"></i></a>
-                                                <a class="delete btn btn-d" style="display: none" href="{{ file.icon }}" download><i class="fas fa-trash-alt"></i></a>
+                                                <a class="delete btn btn-d" style="display: none" href="{% url 'delete' file.name %}"<i class="fas fa-trash-alt"></i></a>
                                             </div> 
                                     {% endfor %}  
                                 </div>
+                                {% if dir_name != "Trash" %}
                                 <button class="plus-button">+</button>
+                                {% else %}
+                                <button class="plus-button-red"><i class="fas fa-trash-alt"></i></button>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
