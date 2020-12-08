@@ -191,3 +191,31 @@ body {font-family: Arial, Helvetica, sans-serif;}
 .hide{
   display: none;
 }
+
+.card-body{
+  position: relative;
+}
+
+.plus-button{
+  background-color: #3cb6ea!important;
+  color: white!important;
+  font-size: 40px;
+  border-radius: 50%;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  height: 75px;
+  width: 75px;
+  position: absolute;
+  right: 50px;
+  bottom: -25px;
+  box-shadow:1px .5rem 2rem rgba(0, 0, 0, 0.3)!important;
+  transition: transform .2s; /* Animation */
+}
+
+.plus-button:hover{
+  background-color: #3ec4fe!important;
+  color: white!important;
+  transform: scale(1.1);
+}

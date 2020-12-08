@@ -11,4 +11,5 @@ urlpatterns = [
     path('go_back_home/', views.go_back_home, name='go_back_home'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
+    path('delete/<str:name>/', views.delete_item, name='delete'),
 ]

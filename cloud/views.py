@@ -55,6 +55,7 @@ def home_page(request):
 
         instance = Cloud.objects.get(user=user)
         instance.current_dir = cloud.current_dir
+        instance.uid = uid
         instance.save()
         hostname = socket.gethostname()
         IPAddr = socket.gethostbyname(hostname)
@@ -91,9 +92,9 @@ def home_page(request):
         }
         return render(request, "cloud/index.html", context)
     except BaseException as e:
+        print(e)
         user = request.user
         cloud = Cloud.objects.filter(user=user)[0]
-        print(e)
         n_dir = cloud.dir_name
         p_dir = cloud.go_back()
         p_dir = p_dir.split("/")
@@ -169,3 +170,10 @@ def logout_view(request):
     instance.save()
     logout(request)
     return redirect('login')
+
+def delete_item(request, name):
+    cloud = Cloud.objects.filter(user=request.user)[0]
+    path = os.path.join(cloud.current_dir, name)
+    cloud.move_to_trash(path)
+    
+    return redirect('home')

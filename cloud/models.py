@@ -24,11 +24,11 @@ class UserId(models.Model):
 class Cloud(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
-    current_dir = models.CharField(max_length=100, default="")
-    dir_name = models.CharField(max_length=100, default="")
+    current_dir = models.CharField(max_length=1000, default="")
+    uid = models.CharField(max_length=1000, default="")
+    dir_name = models.CharField(max_length=1000, default="")
     home_dir = settings.MEDIA_ROOT + "/cloud"
-    user_root = models.CharField(max_length=100, default="")
-    trash = '/Users/Trash'
+    user_root = models.CharField(max_length=1000, default="")
     unwanted_files = ('.download',)
     files_icons = ['.mp3', '.mp4']
     img_icon = ['.jpg', '.png', '.pdf']
@@ -44,13 +44,16 @@ class Cloud(models.Model):
     def __str__(self):
         return str(self.user)
 
+    def trash(self):
+        return self.home_dir + "/" + self.uid + "/Trash"
+
     def create_directory(self, directory):
         os.mkdir(directory)  # create a directory
         directory = os.getcwd()
         return os.path.join(self.current_dir, directory)
 
     def move_to_trash(self, source):
-        destination = shutil.move(source, self.trash)
+        destination = shutil.move(source, self.trash())
         return destination
 
     def go_back_home(self):

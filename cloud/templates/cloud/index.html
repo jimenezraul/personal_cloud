@@ -197,6 +197,7 @@
                                             <h4 class="text-center"><strong>{{ folder.name }}</strong></h4>
                                                
                                             </a>
+                                            <a class="delete btn btn-d" style="display: none" href="{% url 'delete' folder.name %}"><i class="fas fa-trash-alt"></i></a>
                                         </div>
                                     
                                     {% endfor %}
@@ -214,6 +215,7 @@
                                             </div> 
                                     {% endfor %}  
                                 </div>
+                                <button class="plus-button">+</button>
                             </div>
                         </div>
                     </div>
