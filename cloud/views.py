@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
+
 @login_required(login_url='login')
 def home_page(request):
     try:
@@ -26,36 +27,32 @@ def home_page(request):
 
         # If user don't have a unique id, set one and create a home dir
         if len(database) == 0:
-            query = UserId(user=user)
-            query.save()
+            query = UserId(user=user)  # create user id
+            query.save()  # save user id
+            # default folders in home directory
             directories = ["Documents", "Music", "Pictures", "Videos", "Trash"]
-            database = UserId.objects.filter(user=user)
-            uid = str(database[0])
-            os.chdir(cloud.home_dir)
-            os.mkdir(uid, mode=0o775)  # make a dir with the user id
+            database = UserId.objects.filter(
+                user=user)  # user id in the database
+            uid = str(database[0])  # set a variable to user id
+            os.chdir(cloud.home_dir)  # change directory to the root directory
+            os.mkdir(uid, mode=0o775)  # create a dir with the user id
+            # set home directory to the id folder created
             user_dir = os.path.join(cloud.home_dir, uid)
+            # create a cloud associated with user
             instance = Cloud.objects.get(user=user)
-            instance.current_dir = user_dir
-            instance.save()
-            os.chdir(user_dir)
+            instance.current_dir = user_dir  # set the current folder to the home directory
+            instance.save()  # save the changes
+            os.chdir(user_dir)  # change directory to home directory
             for i in directories:
-                os.mkdir(i, mode=0o775)
+                os.mkdir(i, mode=0o775)  # create default folders
             return redirect('home')
-        else:
-            uid = str(database[0])
-            home_dir = cloud.home_dir.split('/')
-            if uid in home_dir:
-                root = cloud.home_dir
-            else:
-                cloud.user_root = os.path.join(cloud.home_dir, uid)
-                root = cloud.user_root
-                if uid not in cloud.current_dir.split("/"):
-                    cloud.current_dir = root
-                if len(cloud.current_dir) == 0:
-                    cloud.current_dir = root
+        else:# if id and home directory are created this will run instead
+            uid = str(database[0])# select user id
+            cloud.user_root = os.path.join(cloud.home_dir, uid)# join root dir and id dir
+            root = cloud.user_root# set root dir to the join link above
+            if uid not in cloud.current_dir.split("/"): # if id not in current dir
+                cloud.current_dir = root# set current dir to user root dir
 
-                    
-        
         instance = Cloud.objects.get(user=user)
         instance.current_dir = cloud.current_dir
         instance.save()
@@ -72,7 +69,7 @@ def home_page(request):
         folders = cloud.get_folders_files(directories)
         files = folders[0]
         folders = folders[1]
-        
+
         if os.getcwd() == root:
             back = True
         else:
@@ -114,10 +111,12 @@ def go_back_directory(request):
     user = request.user
     cloud = Cloud.objects.filter(user=user)[0]
     back = cloud.go_back()
+    cloud.save()
     instance = Cloud.objects.get(user=user)
     instance.current_dir = back
     instance.save()
     return redirect("home")
+
 
 def go_back_home(request):
     user = request.user
@@ -140,6 +139,7 @@ def open_directory(request, directory):
     instance.save()
     return redirect("home")
 
+
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -154,11 +154,12 @@ def login_view(request):
                 return redirect(request.POST.get('next'))
         except:
             return redirect('/')
-            
+
     context = {
-        
+
     }
     return render(request, "cloud/login.html", context)
+
 
 def logout_view(request):
     user = request.user

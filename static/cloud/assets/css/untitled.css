@@ -46,7 +46,10 @@ a, a:hover{
 }
 
 .bg-login-image{
-  background-image: url('/static/cloud/assets/img/dogs/image3.jpeg');
+  background-image: url('/static/cloud/assets/img/cloud.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 body {font-family: Arial, Helvetica, sans-serif;}

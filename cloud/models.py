@@ -5,6 +5,7 @@ import shutil
 import os
 
 
+######################## User Unique ID ########################
 class UserId(models.Model):
 
     id = models.UUIDField(
@@ -19,6 +20,7 @@ class UserId(models.Model):
         return str(self.id)
 
 
+######################## Cloud model ########################
 class Cloud(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
@@ -46,9 +48,6 @@ class Cloud(models.Model):
         os.mkdir(directory)  # create a directory
         directory = os.getcwd()
         return os.path.join(self.current_dir, directory)
-
-    # def current_path(self, directory):
-    #     self.current_dir = directory
 
     def move_to_trash(self, source):
         destination = shutil.move(source, self.trash)
@@ -118,7 +117,7 @@ class Cloud(models.Model):
                 icon.append('cloud/assets/img/folder.svg')
 
         folder = self.get_f_icon(folders['folders'], icon)
-        
+
         # List the files extension in the directory
         file_extension = [os.path.splitext(i)[1] for i in folders["files"]]
 
@@ -133,3 +132,11 @@ class Cloud(models.Model):
 
         files = self.get_f_icon(folders['files'], icon)
         return files, folder
+
+    def save(self, *args, **kwargs):
+        try:
+            name = Cloud.objects.get(user=self.user)
+            name.dir_name.save()
+        except:
+            pass
+        super(Cloud, self).save(*args, **kwargs)
