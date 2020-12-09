@@ -9,7 +9,12 @@
 }
 
 .btn-blue {
-  background-color: rgb(92,207,254);
+  background-color: #3cb6ea;
+  color: white;
+}
+.btn-blue:hover {
+  background-color: #41c6ff;
+  color: white;
 }
 
 .fas.fa-search {
@@ -242,4 +247,16 @@ body {font-family: Arial, Helvetica, sans-serif;}
   background-color: #db2424!important;
   color: white!important;
   transform: scale(1.1);
+}
+
+.create_folder{
+  background-color: rgb(255, 255, 255);
+  position: absolute;
+  padding: 15px;
+  border-radius: 10px;
+  min-height: 100px;
+  min-width: 200px;
+  right: 140px;
+  bottom: -50px;
+  box-shadow:1px .5rem 2rem rgba(0, 0, 0, 0.3)!important;
 }

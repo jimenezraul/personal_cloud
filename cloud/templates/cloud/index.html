@@ -186,7 +186,7 @@
                                 {% else %}
                                 <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
                                     <div class="dropdown-menu shadow dropdown-menu-right animated--fade-in">
-                                        <p class="text-center dropdown-header">Files Options</p><a class="dropdown-item" onclick="showAndHide('.download')">&nbsp;Download</a><a class="dropdown-item" onclick="showAndHide('.delete')">&nbsp;Delete</a>
+                                        <p class="text-center dropdown-header">Files Options</p><a class="dropdown-item" onclick="showAndHide('.download')">&nbsp;Download</a><a class="dropdown-item" onclick="showAndHide('.delete')">&nbsp;Move to Trash</a>
                                         </div>
                                 </div>
                                 {% endif %}
@@ -199,7 +199,17 @@
                                             <a href="{% url 'directory' folder.name %}">
                                                 
                                             <img class="mb-2" src="{{ folder.icon }}">
-                                            <h4 class="text-center"><strong>{{ folder.name }}</strong></h4>
+                                            <h4 class="text-center">
+                                                <strong>
+                                                    {% if folder.name == "Trash" %}
+                                                    {{ folder.name }}
+                                                        {% if trash_count != 0 %}
+                                                        <a href="#" class="badge badge-danger">{{trash_count}}</a>
+                                                        {% endif %}
+                                                    {% else %}
+                                                    {{ folder.name }}
+                                                    {% endif %}
+                                                </strong></h4>
                                                
                                             </a>
                                             <a class="delete btn btn-d" style="display: none" href="{% url 'delete' folder.name %}"><i class="fas fa-trash-alt"></i></a>
@@ -216,12 +226,21 @@
                                                 <h4 class="text-center"><strong>{{ file.name }}</strong></h4>
                                                 </a>
                                                 <a class="download btn btn-b" style="display: none" href="{{ file.icon }}" download><i class="fas fa-cloud-download-alt"></i></a>
-                                                <a class="delete btn btn-d" style="display: none" href="{% url 'delete' file.name %}"<i class="fas fa-trash-alt"></i></a>
+                                                <a class="delete btn btn-d" style="display: none" href="{% url 'delete' file.name %}"><i class="fas fa-trash-alt"></i></a>
                                             </div> 
                                     {% endfor %}  
                                 </div>
                                 {% if dir_name != "Trash" %}
-                                <button class="plus-button">+</button>
+                                <button class="plus-button" onclick="showAndHide('.create_folder')">+</button>
+                                <div class="create_folder" style="display: none">
+                                    <h4>Create a folder.</h4>
+                                    <form class="form-inline d-inline-block  mw-100 navbar-search" action="{% url 'create_folder' %}" method="POST">
+                                        {% csrf_token %}
+                                        <div class="input-group"><input class="form-control border-0 small bg-search" type="text" name="folder" placeholder="Folder name." required>
+                                            <div class="input-group-append"><button class="btn py-0 btn-blue" type="submit">Create</button></div>
+                                        </div>
+                                    </form>
+                                </div>
                                 {% else %}
                                 <button class="plus-button-red"><i class="fas fa-trash-alt"></i></button>
                                 {% endif %}

@@ -77,6 +77,9 @@ def home_page(request):
             back = False
         percent = int((used / total) * 100)
         media = cloud.get_media_root()
+        trash = cloud.trash()
+        trash_count = len([name for name in os.listdir(trash)])
+        
         context = {
             "folders": folders,
             "files": files,
@@ -89,6 +92,7 @@ def home_page(request):
             "ip": IPAddr,
             "hostname": hostname,
             "current_path": media,
+            "trash_count": trash_count,
         }
         return render(request, "cloud/index.html", context)
     except BaseException as e:
@@ -173,7 +177,13 @@ def logout_view(request):
 
 def delete_item(request, name):
     cloud = Cloud.objects.filter(user=request.user)[0]
-    path = os.path.join(cloud.current_dir, name)
-    cloud.move_to_trash(path)
-    
+    cloud.move_to_trash(name)
     return redirect('home')
+
+def create_folder(request):
+    cloud = Cloud.objects.filter(user=request.user)[0]
+    if request.method == 'POST':
+        folder = request.POST.get('folder')
+        cloud.create_directory(folder)
+
+    return redirect("home")

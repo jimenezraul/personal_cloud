@@ -48,13 +48,19 @@ class Cloud(models.Model):
         return self.home_dir + "/" + self.uid + "/Trash"
 
     def create_directory(self, directory):
+        os.chdir(self.current_dir)
         os.mkdir(directory)  # create a directory
-        directory = os.getcwd()
-        return os.path.join(self.current_dir, directory)
+        
 
     def move_to_trash(self, source):
-        destination = shutil.move(source, self.trash())
-        return destination
+        t = self.trash()
+        os.chdir(t)
+        if os.path.exists(source):
+            os.rename(os.path.join(self.current_dir, source), os.path.join(self.current_dir, source + "1"))
+            source = source + "1"
+            self.move_to_trash(source)
+        else:
+            destination = shutil.move(os.path.join(self.current_dir, source), self.trash())
 
     def go_back_home(self):
         return self.home_dir

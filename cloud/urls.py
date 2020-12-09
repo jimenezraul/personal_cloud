@@ -12,4 +12,5 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('delete/<str:name>/', views.delete_item, name='delete'),
+    path('create/', views.create_folder, name='create_folder'),
 ]
