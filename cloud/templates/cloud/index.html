@@ -95,7 +95,7 @@
                             </li>
                             <div class="d-none d-sm-block topbar-divider"></div>
                             <li class="nav-item dropdown no-arrow">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small">{{ user }}</span><img class="border rounded-circle img-profile" src="{% static 'cloud/assets/img/avatars/avatar1.jpeg' %}"></a>
+                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small">{{ user }}</span><i class="fas fa-user-circle"></i></a>
                                     <div
                                         class="dropdown-menu shadow dropdown-menu-right animated--grow-in"><a class="dropdown-item" href="#"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" href="#"><i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Settings</a>
                                         <a
@@ -193,7 +193,24 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                     
+                                    {% if dir_name == "Trash" %}
+                                    {% if not trash_count %}
+                                    <div class="col-12">
+                                    <h1 class="text-center mt-5"><strong>No files or folders</strong></h1>
+                                    </div>
+                                    {% else %}
+                                    {% for folder in folders %}
+                                        <div class="col-6 col-md-3 col-xl-2 text-center folder"> 
+                                            <img class="mb-2" src="{{ folder.icon }}">
+                                            <h4 class="text-center">
+                                                <strong>
+                                                    {{ folder.name }}
+                                                </strong></h4>
+                                        </div>
+                                    
+                                    {% endfor %}
+                                    {% endif %}
+                                    {% else %}
                                     {% for folder in folders %}
                                         <div class="col-6 col-md-3 col-xl-2 text-center folder">
                                             <a href="{% url 'directory' folder.name %}">
@@ -216,16 +233,21 @@
                                         </div>
                                     
                                     {% endfor %}
-                                    {% if dir_name == "Trash" %}
-                                    {% if not trash_count %}
-                                    <div class="col-12">
-                                    <h1 class="text-center mt-5"><strong>No files or folders</strong></h1>
-                                    </div>
-                                    {% endif %}
                                     {% endif %}
                                 
                                 </div>
                                 <div class="row mt-4">
+                                    {% if dir_name == "Trash" %}
+                                    {% if not trash_count %}
+                                    {% else %}
+                                    {% for file in files %}
+                                            <div class="col-6 col-md-3 col-xl-2 text-center files">
+                                                    <img id="myImg" src="{{ file.icon }}">
+                                                <h4 class="text-center"><strong>{{ file.name }}</strong></h4>
+                                            </div> 
+                                    {% endfor %} 
+                                    {% endif %}
+                                    {% else %}
                                     {% for file in files %}
                                             <div class="col-6 col-md-3 col-xl-2 text-center files">
                                                 <a href="{{ file.icon }}">
@@ -236,6 +258,7 @@
                                                 <a class="delete btn btn-d" style="display: none" href="{% url 'delete' file.name %}"><i class="fas fa-trash-alt"></i></a>
                                             </div> 
                                     {% endfor %}  
+                                    {% endif %}
                                 </div>
                                 {% if dir_name != "Trash" %}
                                 <button class="plus-button" onclick="showAndHide('.create_folder')">+</button>
@@ -250,8 +273,8 @@
                                 </div>
                                 {% else %}
                                 {% if trash_count %}
-                                <button class="plus-button-red" onclick="showAndHide('.empty_trash')"><i class="fas fa-trash-alt"></i></button>
-                                <div class="empty_trash" style="display: none">
+                                <button id="trash" class="plus-button-red" onclick="showAndHide('.empty_trash')"><i id="icon" class="fas fa-trash-alt"></i></button>
+                                <div id="confirm" class="empty_trash" style="display: none">
                                     <h4><strong>Empty Trash</strong></h4>
                                     <form class="form-inline d-inline-block  mw-100 navbar-search" action="{% url 'empty_trash' %}" method="POST">
                                         {% csrf_token %}

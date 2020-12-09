@@ -79,6 +79,9 @@
             
             function showAndHide(props){
                     var x = document.querySelectorAll(props);
+                    var confirm = document.getElementById("confirm");
+                    var trash = document.getElementById("trash");
+                    var icon = document.getElementById("icon");
                     console.log(x.length)
                     for (i = 0; i < x.length; i++) {
                         if(x[i].style.display === "none"){
@@ -87,7 +90,18 @@
                             x[i].style.display = "none";
                         }
                     }
+                    window.onclick = function(event) {
+                        console.log(event.target == confirm || event.target == trash || event.target == icon);
+                    if (event.target == confirm || event.target == trash || event.target == icon) {
+                        confirm.style.display = "inline-block";
+                        
+                    }else{
+                        confirm.style.display = "none";
+                    }
                 }
+            }
+                
+
             </script>
     {% endblock %}
 </body>
