@@ -66,8 +66,8 @@ class Cloud(models.Model):
         return self.home_dir
 
     def empty_trash(self):
-        for filename in os.listdir(self.trash):
-            file_path = os.path.join(self.trash, filename)
+        for filename in os.listdir(self.trash()):
+            file_path = os.path.join(self.trash(), filename)
             try:
                 if os.path.isfile(file_path) or os.path.islink(file_path):
                     os.unlink(file_path)

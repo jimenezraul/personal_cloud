@@ -216,6 +216,13 @@
                                         </div>
                                     
                                     {% endfor %}
+                                    {% if dir_name == "Trash" %}
+                                    {% if not trash_count %}
+                                    <div class="col-12">
+                                    <h1 class="text-center mt-5"><strong>No files or folders</strong></h1>
+                                    </div>
+                                    {% endif %}
+                                    {% endif %}
                                 
                                 </div>
                                 <div class="row mt-4">
@@ -233,16 +240,25 @@
                                 {% if dir_name != "Trash" %}
                                 <button class="plus-button" onclick="showAndHide('.create_folder')">+</button>
                                 <div class="create_folder" style="display: none">
-                                    <h4>Create a folder.</h4>
+                                    <h4><strong>Create a folder</strong></h4>
                                     <form class="form-inline d-inline-block  mw-100 navbar-search" action="{% url 'create_folder' %}" method="POST">
                                         {% csrf_token %}
-                                        <div class="input-group"><input class="form-control border-0 small bg-search" type="text" name="folder" placeholder="Folder name." required>
+                                        <div class="input-group"><input class="form-control border-0 small bg-search" type="text" name="folder" placeholder="Folder name" required>
                                             <div class="input-group-append"><button class="btn py-0 btn-blue" type="submit">Create</button></div>
                                         </div>
                                     </form>
                                 </div>
                                 {% else %}
-                                <button class="plus-button-red"><i class="fas fa-trash-alt"></i></button>
+                                {% if trash_count %}
+                                <button class="plus-button-red" onclick="showAndHide('.empty_trash')"><i class="fas fa-trash-alt"></i></button>
+                                <div class="empty_trash" style="display: none">
+                                    <h4><strong>Empty Trash</strong></h4>
+                                    <form class="form-inline d-inline-block  mw-100 navbar-search" action="{% url 'empty_trash' %}" method="POST">
+                                        {% csrf_token %}
+                                        <button class="btn btn-confirm" type="submit"><strong>Confirm</strong></button>
+                                    </form>
+                                </div>
+                                {% endif %}
                                 {% endif %}
                             </div>
                         </div>

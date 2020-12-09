@@ -17,7 +17,7 @@ def home_page(request):
     try:
         user = request.user
         cloud = Cloud.objects.filter(user=user)
-        database = UserId.objects.filter(user=user)
+        userId = UserId.objects.filter(user=user)
         if len(cloud) == 0:
             new_user = Cloud(user=user)
             new_user.save()
@@ -26,18 +26,22 @@ def home_page(request):
             cloud = cloud[0]
 
         # If user don't have a unique id, set one and create a home dir
-        if len(database) == 0:
+        if len(userId) == 0:
             query = UserId(user=user)  # create user id
             query.save()  # save user id
+
             # default folders in home directory
             directories = ["Documents", "Music", "Pictures", "Videos", "Trash"]
-            database = UserId.objects.filter(
+
+            userId = UserId.objects.filter(
                 user=user)  # user id in the database
-            uid = str(database[0])  # set a variable to user id
+            uid = str(userId[0])  # set a variable to user id
             os.chdir(cloud.home_dir)  # change directory to the root directory
             os.mkdir(uid, mode=0o775)  # create a dir with the user id
+
             # set home directory to the id folder created
             user_dir = os.path.join(cloud.home_dir, uid)
+
             # create a cloud associated with user
             instance = Cloud.objects.get(user=user)
             instance.current_dir = user_dir  # set the current folder to the home directory
@@ -46,23 +50,28 @@ def home_page(request):
             for i in directories:
                 os.mkdir(i, mode=0o775)  # create default folders
             return redirect('home')
-        else:# if id and home directory are created this will run instead
-            uid = str(database[0])# select user id
-            cloud.user_root = os.path.join(cloud.home_dir, uid)# join root dir and id dir
-            root = cloud.user_root# set root dir to the join link above
-            if uid not in cloud.current_dir.split("/"): # if id not in current dir
-                cloud.current_dir = root# set current dir to user root dir
+        else:  # if id and home directory are created this will run instead
+            uid = str(userId[0])  # select user id
+            cloud.user_root = os.path.join(
+                cloud.home_dir, uid)  # join root dir and id dir
+            root = cloud.user_root  # set root dir to the join link above
+            # if id not in current dir
+            if uid not in cloud.current_dir.split("/"):
+                cloud.current_dir = root  # set current dir to user root dir
 
+        ######## instance to save current dir and id ########
         instance = Cloud.objects.get(user=user)
         instance.current_dir = cloud.current_dir
         instance.uid = uid
         instance.save()
-        hostname = socket.gethostname()
-        IPAddr = socket.gethostbyname(hostname)
+        ######## end instance ########
+
+        hostname = socket.gethostname() # get hostname 
+        IPAddr = socket.gethostbyname(hostname) # get hostname IP
         total, used, free = shutil.disk_usage(cloud.home_dir)
-        total = total // (2 ** 30)
-        used = used // (2 ** 30)
-        free = free // (2 ** 30)
+        total = total // (2 ** 30) # total disk space
+        used = used // (2 ** 30) # used disk space
+        free = free // (2 ** 30) # free disk space
 
         os.chdir(cloud.current_dir)
         directories = os.listdir(cloud.current_dir)
@@ -78,8 +87,8 @@ def home_page(request):
         percent = int((used / total) * 100)
         media = cloud.get_media_root()
         trash = cloud.trash()
-        trash_count = len([name for name in os.listdir(trash)])
-        
+        trash_count = len([name for name in os.listdir(trash) if not name.startswith(".")])
+
         context = {
             "folders": folders,
             "files": files,
@@ -175,10 +184,12 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
+
 def delete_item(request, name):
     cloud = Cloud.objects.filter(user=request.user)[0]
     cloud.move_to_trash(name)
     return redirect('home')
+
 
 def create_folder(request):
     cloud = Cloud.objects.filter(user=request.user)[0]
@@ -186,4 +197,9 @@ def create_folder(request):
         folder = request.POST.get('folder')
         cloud.create_directory(folder)
 
+    return redirect("home")
+
+def empty_trash(request):
+    cloud = Cloud.objects.filter(user=request.user)[0]
+    cloud.empty_trash()
     return redirect("home")
