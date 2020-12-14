@@ -1,8 +1,10 @@
 from django.db import models
 from django.conf import settings
+import os
 import uuid
 import shutil
-import os
+import glob
+from PIL import Image
 
 
 ######################## User Unique ID ########################
@@ -31,7 +33,7 @@ class Cloud(models.Model):
     user_root = models.CharField(max_length=1000, default="")
     unwanted_files = ('.download',)
     files_icons = ['.mp3', '.mp4']
-    img_icon = ['.jpg', '.png', '.pdf']
+    img_icon = ['.jpg', '.png']
     file = 'file.svg'
     icons = [
         'picture.svg',
@@ -50,17 +52,18 @@ class Cloud(models.Model):
     def create_directory(self, directory):
         os.chdir(self.current_dir)
         os.mkdir(directory)  # create a directory
-        
 
     def move_to_trash(self, source):
         t = self.trash()
         os.chdir(t)
         if os.path.exists(source):
-            os.rename(os.path.join(self.current_dir, source), os.path.join(self.current_dir, source + "1"))
+            os.rename(os.path.join(self.current_dir, source),
+                      os.path.join(self.current_dir, source + "1"))
             source = source + "1"
             self.move_to_trash(source)
         else:
-            destination = shutil.move(os.path.join(self.current_dir, source), self.trash())
+            destination = shutil.move(os.path.join(
+                self.current_dir, source), self.trash())
 
     def go_back_home(self):
         return self.home_dir
@@ -102,12 +105,18 @@ class Cloud(models.Model):
     def get_f_icon(self, f, icon):
         fs = []
         for i in range(len(f)):
-            if icon[i] == "":
-                fs.append(
-                    {"name": f[i], "icon": self.get_media_root() + "/" + f[i]})
+            if f[i].startswith("T_"):
+                pass
             else:
-                fs.append(
-                    {"name": f[i], "icon": settings.STATIC_URL + icon[i]})
+                if icon[i] == "":
+                    fs.append(
+                        {"name": f[i], "icon": self.get_media_root() + "/" + f[i], "thumbnail": self.get_media_root() + "/T_" + f[i]})
+                elif "." in f[i]:  # if no thumbnail set file as thumbnail
+                    fs.append(
+                        {"name": f[i], "icon": self.get_media_root() + "/" + f[i], "thumbnail": self.get_media_root() + "/" + f[i]})
+                else:
+                    fs.append(
+                        {"name": f[i], "icon": settings.STATIC_URL + icon[i]})
         return fs
 
     def get_folders_files(self, directories):  # Set folders and files icons
@@ -149,3 +158,15 @@ class Cloud(models.Model):
         except:
             pass
         super(Cloud, self).save(*args, **kwargs)
+
+    def get_thumbnail(self):
+        for i in self.img_icon:
+            # get all the jpg files from the current folder
+            for infile in glob.glob("*"+i):
+                im = Image.open(infile)
+                # convert to thumbnail image
+                im.thumbnail((128, 128), Image.ANTIALIAS)
+                # don't save if thumbnail already exists
+                if infile[0:2] != "T_":
+                    # prefix thumbnail file with T_
+                    im.save("T_" + infile)

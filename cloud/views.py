@@ -1,11 +1,7 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
 from .models import UserId, Cloud
-import os
-# from .cloud import Cloud
-import shutil
-import socket
-import platform
+import os, shutil, socket, platform, glob
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -18,6 +14,7 @@ def home_page(request):
         user = request.user
         cloud = Cloud.objects.filter(user=user)
         userId = UserId.objects.filter(user=user)
+        
         if len(cloud) == 0:
             new_user = Cloud(user=user)
             new_user.save()
@@ -71,9 +68,10 @@ def home_page(request):
         total, used, free = shutil.disk_usage(cloud.home_dir)
         total = total // (2 ** 30) # total disk space
         used = used // (2 ** 30) # used disk space
-        free = free // (2 ** 30) # free disk space
+        free = free // (2 ** 30)  # free disk space
 
         os.chdir(cloud.current_dir)
+        cloud.get_thumbnail()
         directories = os.listdir(cloud.current_dir)
 
         folders = cloud.get_folders_files(directories)
