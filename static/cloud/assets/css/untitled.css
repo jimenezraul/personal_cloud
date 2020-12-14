@@ -12,6 +12,7 @@
   background-color: #3cb6ea;
   color: white;
 }
+
 .btn-blue:hover {
   background-color: #41c6ff;
   color: white;
@@ -248,31 +249,34 @@ body {font-family: Arial, Helvetica, sans-serif;}
   transform: scale(1.1);
 }
 
+
 .create_folder{
   background-color: rgb(255, 255, 255);
+  display: none;
   position: absolute;
   padding: 15px;
   border-radius: 5px;
   min-height: 100px;
   min-width: 200px;
-  right: 140px;
-  bottom: -50px;
+  right: 150px;
+  bottom: -40px;
   box-shadow:1px .5rem 2rem rgba(0, 0, 0, 0.3)!important;
 }
 
 .empty_trash{
   background-color: rgb(255, 255, 255);
   position: absolute;
-  border: 1px solid rgb(230, 230, 230);
   padding: 15px;
   border-radius: 5px;
   min-height: 100px;
-  right: 140px;
-  bottom: -45px;
+  right: 150px;
+  bottom: -40px;
   box-shadow:1px .5rem 2rem rgba(0, 0, 0, 0.3)!important;
+  position: absolute;
 }
 
 .btn-confirm {
+  position: relative;
   display: block!important;
   width: 200px;
   background-color: #f72828!important;
@@ -285,4 +289,20 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 .fa-user-circle{
   font-size: 25px;
+}
+
+.create-block, .trash-block{
+  position: relative;
+}
+
+.create-block:after, .trash-block:after {
+  content: "";
+  position: absolute;
+  border-left: 20px solid white;
+  border-bottom: 20px solid transparent;
+  border-top: 20px solid transparent;
+  height: 0px;
+  width: 0px;
+  top: 15px;
+  right: -30px; 
 }

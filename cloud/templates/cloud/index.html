@@ -229,7 +229,10 @@
                                                 </strong></h4>
                                                
                                             </a>
+                                            {% if folder.name == "Trash" %}
+                                            {% else %}
                                             <a class="delete btn btn-d" style="display: none" href="{% url 'delete' folder.name %}"><i class="fas fa-trash-alt"></i></a>
+                                            {% endif %}
                                         </div>
                                     
                                     {% endfor %}
@@ -261,25 +264,29 @@
                                     {% endif %}
                                 </div>
                                 {% if dir_name != "Trash" %}
-                                <button class="plus-button" onclick="showAndHide('.create_folder')">+</button>
-                                <div class="create_folder" style="display: none">
-                                    <h4><strong>Create a folder</strong></h4>
-                                    <form class="form-inline d-inline-block  mw-100 navbar-search" action="{% url 'create_folder' %}" method="POST">
-                                        {% csrf_token %}
-                                        <div class="input-group"><input class="form-control border-0 small bg-search" type="text" name="folder" placeholder="Folder name" required>
-                                            <div class="input-group-append"><button class="btn py-0 btn-blue" type="submit">Create</button></div>
-                                        </div>
-                                    </form>
+                                <button class="plus-button" onclick="create()">+</button>
+                                <div id="create" class="create_folder text-center" style="display: none">
+                                    <div class="create-block">
+                                        <h4><strong>Create a folder</strong></h4>
+                                        <form class="form-inline d-inline-block  mw-100 navbar-search" action="{% url 'create_folder' %}" method="POST">
+                                            {% csrf_token %}
+                                            <div class="input-group"><input id="input" class="form-control border-0 small bg-search" type="text" name="folder" placeholder="Folder name" required>
+                                                <div class="input-group-append"><button class="btn py-0 btn-blue" type="submit">Create</button></div>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                                 {% else %}
                                 {% if trash_count %}
-                                <button id="trash" class="plus-button-red" onclick="showAndHide('.empty_trash')"><i id="icon" class="fas fa-trash-alt"></i></button>
-                                <div id="confirm" class="empty_trash" style="display: none">
+                                <button id="trash" class="plus-button-red" onclick="delete_f()"><i id="icon" class="fas fa-trash-alt"></i></button>
+                                <div id="confirm" class="empty_trash text-center" style="display: none">
+                                    <div class="trash-block">
                                     <h4><strong>Empty Trash</strong></h4>
                                     <form class="form-inline d-inline-block  mw-100 navbar-search" action="{% url 'empty_trash' %}" method="POST">
                                         {% csrf_token %}
                                         <button class="btn btn-confirm" type="submit"><strong>Confirm</strong></button>
                                     </form>
+                                    </div>
                                 </div>
                                 {% endif %}
                                 {% endif %}
