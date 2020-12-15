@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from .movieapi import MovieApi
 
 
 @login_required(login_url='login')
@@ -77,7 +78,7 @@ def home_page(request):
         folders = cloud.get_folders_files(directories)
         files = folders[0]
         folders = folders[1]
-
+        
         if os.getcwd() == root:
             back = True
         else:
@@ -86,6 +87,13 @@ def home_page(request):
         media = cloud.get_media_root()
         trash = cloud.trash()
         trash_count = len([name for name in os.listdir(trash) if not name.startswith(".")])
+
+        for i in files:
+            for x in cloud.videos_files:
+                if i['name'].endswith(x):
+                    movie_name = i['name'].split(x)[0]
+                    movie = MovieApi()
+                    movie.create_movie_data(movie_name, user, i['url'])
         
         context = {
             "folders": folders,

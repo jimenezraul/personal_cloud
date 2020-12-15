@@ -20,6 +20,7 @@ class UserId(models.Model):
 
     def __str__(self):
         return str(self.id)
+######################## End User Unique ID ########################
 
 
 ######################## Cloud model ########################
@@ -33,6 +34,7 @@ class Cloud(models.Model):
     user_root = models.CharField(max_length=1000, default="")
     unwanted_files = ('.download',)
     files_icons = ['.mp3', '.mp4', ".m4v", ".pdf"]
+    videos_files = [".mp4", ".m4v", ".mov"]
     img_icon = ['.jpg', '.png']
     file = 'file.svg'
     icons = [
@@ -169,3 +171,21 @@ class Cloud(models.Model):
                 if infile[0:2] != "T_":
                     # prefix thumbnail file with T_
                     im.save("T_" + infile)
+######################## End Cloud model ########################
+
+class Movie(models.Model):
+    movie_id = models.CharField(max_length=30, default="")
+    title = models.CharField(max_length=255)
+    backdrop_path = models.CharField(max_length=500, default="")
+    overview = models.CharField(max_length=1000, default="")
+    poster_path = models.CharField(max_length=500, default="")
+    youtube = models.CharField(max_length=500, default="https://www.youtube.com/watch?v=")
+    trailer = models.CharField(max_length=500, default="")
+    img_url = models.CharField(max_length=500, default="https://image.tmdb.org/t/p/original")
+    file_url = models.CharField(max_length=500, default="")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
+    
