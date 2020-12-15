@@ -253,11 +253,15 @@
                                     {% else %}
                                     {% for file in files %}
                                             <div class="col-6 col-md-3 col-xl-2 text-center files">
-                                                <a href="{{ file.icon }}">
+                                                <a href="{{ file.url }}">
+                                                    {% if file.thumbnail %}
                                                     <img id="myImg" src="{{ file.thumbnail }}">
+                                                    {% else %}
+                                                    <img id="myImg" src="{{ file.icon }}">
+                                                    {% endif %}
                                                 <h4 class="text-center"><strong>{{ file.name }}</strong></h4>
                                                 </a>
-                                                <a class="download btn btn-b" style="display: none" href="{{ file.icon }}" download><i class="fas fa-cloud-download-alt"></i></a>
+                                                <a class="download btn btn-b" style="display: none" href="{{ file.url }}" download><i class="fas fa-cloud-download-alt"></i></a>
                                                 <a class="delete btn btn-d" style="display: none" href="{% url 'delete' file.name %}"><i class="fas fa-trash-alt"></i></a>
                                             </div> 
                                     {% endfor %}  

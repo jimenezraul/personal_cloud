@@ -32,13 +32,12 @@ class Cloud(models.Model):
     home_dir = settings.MEDIA_ROOT + "/cloud"
     user_root = models.CharField(max_length=1000, default="")
     unwanted_files = ('.download',)
-    files_icons = ['.mp3', '.mp4']
+    files_icons = ['.mp3', '.mp4', ".m4v", ".pdf"]
     img_icon = ['.jpg', '.png']
     file = 'file.svg'
     icons = [
-        'picture.svg',
-        'picture.svg',
         'audio.svg',
+        'video.svg',
         'video.svg',
         'pdf.svg',
     ]
@@ -110,10 +109,10 @@ class Cloud(models.Model):
             else:
                 if icon[i] == "":
                     fs.append(
-                        {"name": f[i], "icon": self.get_media_root() + "/" + f[i], "thumbnail": self.get_media_root() + "/T_" + f[i]})
-                elif "." in f[i]:  # if no thumbnail set file as thumbnail
+                        {"name": f[i], "url": self.get_media_root() + "/" + f[i], "thumbnail": self.get_media_root() + "/T_" + f[i]})
+                elif "." in icon[i]:  # if no thumbnail set file as thumbnail
                     fs.append(
-                        {"name": f[i], "icon": self.get_media_root() + "/" + f[i], "thumbnail": self.get_media_root() + "/" + f[i]})
+                        {"name": f[i], "url": self.get_media_root() + "/" + f[i], "icon": settings.STATIC_URL + icon[i]})
                 else:
                     fs.append(
                         {"name": f[i], "icon": settings.STATIC_URL + icon[i]})
@@ -142,8 +141,8 @@ class Cloud(models.Model):
         icon = []
         for i in file_extension:  # Check extension and asign an icon else default icon
             if i in self.files_icons:
-                icon.append(self.icons[self.files_icons.index(i)])
-            if i in self.img_icon:
+                icon.append("cloud/assets/img/" +self.icons[self.files_icons.index(i)])
+            elif i in self.img_icon:
                 icon.append("")
             else:
                 icon.append("cloud/assets/img/" + self.file)

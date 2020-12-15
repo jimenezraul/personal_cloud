@@ -86,7 +86,7 @@ def home_page(request):
         media = cloud.get_media_root()
         trash = cloud.trash()
         trash_count = len([name for name in os.listdir(trash) if not name.startswith(".")])
-
+        
         context = {
             "folders": folders,
             "files": files,
