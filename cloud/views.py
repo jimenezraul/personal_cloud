@@ -1,7 +1,11 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
 from .models import UserId, Cloud
-import os, shutil, socket, platform, glob
+import os
+import shutil
+import socket
+import platform
+import glob
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -15,7 +19,7 @@ def home_page(request):
         user = request.user
         cloud = Cloud.objects.filter(user=user)
         userId = UserId.objects.filter(user=user)
-        
+
         if len(cloud) == 0:
             new_user = Cloud(user=user)
             new_user.save()
@@ -64,11 +68,11 @@ def home_page(request):
         instance.save()
         ######## end instance ########
 
-        hostname = socket.gethostname() # get hostname 
-        IPAddr = socket.gethostbyname(hostname) # get hostname IP
+        hostname = socket.gethostname()  # get hostname
+        IPAddr = socket.gethostbyname(hostname)  # get hostname IP
         total, used, free = shutil.disk_usage(cloud.home_dir)
-        total = total // (2 ** 30) # total disk space
-        used = used // (2 ** 30) # used disk space
+        total = total // (2 ** 30)  # total disk space
+        used = used // (2 ** 30)  # used disk space
         free = free // (2 ** 30)  # free disk space
 
         os.chdir(cloud.current_dir)
@@ -78,7 +82,7 @@ def home_page(request):
         folders = cloud.get_folders_files(directories)
         files = folders[0]
         folders = folders[1]
-        
+
         if os.getcwd() == root:
             back = True
         else:
@@ -86,7 +90,8 @@ def home_page(request):
         percent = int((used / total) * 100)
         media = cloud.get_media_root()
         trash = cloud.trash()
-        trash_count = len([name for name in os.listdir(trash) if not name.startswith(".")])
+        trash_count = len([name for name in os.listdir(
+            trash) if not name.startswith(".")])
 
         for i in files:
             for x in cloud.videos_files:
@@ -94,7 +99,7 @@ def home_page(request):
                     movie_name = i['name'].split(x)[0]
                     movie = MovieApi()
                     movie.create_movie_data(movie_name, user, i['url'])
-        
+
         context = {
             "folders": folders,
             "files": files,
@@ -204,6 +209,7 @@ def create_folder(request):
         cloud.create_directory(folder)
 
     return redirect("home")
+
 
 def empty_trash(request):
     cloud = Cloud.objects.filter(user=request.user)[0]

@@ -3,7 +3,6 @@ from . import views
 from django.conf.urls import url, include
 
 
-
 urlpatterns = [
     path('', views.home_page, name='home'),
     path('open/<str:directory>/', views.open_directory, name='directory'),

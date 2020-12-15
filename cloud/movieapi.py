@@ -1,6 +1,7 @@
-import requests, json
-from urllib.request import urlopen
+import requests
+import json
 from .models import Movie
+
 
 class MovieApi:
     api = open("movieapi.txt", "r")
@@ -19,7 +20,7 @@ class MovieApi:
         instance.file_url = link
         instance.trailer = response['results'][1]['key']
         instance.save()
-    
+
     def create_movie_data(self, movie, user, link):
         url = f"https://api.themoviedb.org/3/search/movie?api_key={self.api}&query={movie}"
         response = requests.get(url)
@@ -33,7 +34,3 @@ class MovieApi:
 
                 if len(movies) == 0:
                     self.create(i, user, link)
-                
-
-        # print(response["results"] == movie)
-    

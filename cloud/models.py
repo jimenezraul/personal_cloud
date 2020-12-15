@@ -143,7 +143,8 @@ class Cloud(models.Model):
         icon = []
         for i in file_extension:  # Check extension and asign an icon else default icon
             if i in self.files_icons:
-                icon.append("cloud/assets/img/" +self.icons[self.files_icons.index(i)])
+                icon.append("cloud/assets/img/" +
+                            self.icons[self.files_icons.index(i)])
             elif i in self.img_icon:
                 icon.append("")
             else:
@@ -173,19 +174,21 @@ class Cloud(models.Model):
                     im.save("T_" + infile)
 ######################## End Cloud model ########################
 
+
 class Movie(models.Model):
     movie_id = models.CharField(max_length=30, default="")
     title = models.CharField(max_length=255)
     backdrop_path = models.CharField(max_length=500, default="")
     overview = models.CharField(max_length=1000, default="")
     poster_path = models.CharField(max_length=500, default="")
-    youtube = models.CharField(max_length=500, default="https://www.youtube.com/watch?v=")
+    youtube = models.CharField(
+        max_length=500, default="https://www.youtube.com/watch?v=")
     trailer = models.CharField(max_length=500, default="")
-    img_url = models.CharField(max_length=500, default="https://image.tmdb.org/t/p/original")
+    img_url = models.CharField(
+        max_length=500, default="https://image.tmdb.org/t/p/original")
     file_url = models.CharField(max_length=500, default="")
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
-    
