@@ -18,7 +18,7 @@ class MovieApi:
         instance.overview = movie["overview"]
         instance.poster_path = movie["poster_path"]
         instance.file_url = link
-        instance.trailer = response['results'][1]['key']
+        instance.trailer = response['results'][-1]['key']
         instance.save()
 
     def create_movie_data(self, movie, user, link):

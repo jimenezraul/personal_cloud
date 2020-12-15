@@ -170,7 +170,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
   transform: scale(1.2);
 }
 
-.folder, h4{
+.folder, h4, h5, p{
   color: rgba(0, 0, 0, 0.584);
   transition: transform .2s; /* Animation */
 }
@@ -305,4 +305,8 @@ body {font-family: Arial, Helvetica, sans-serif;}
   width: 0px;
   top: 15px;
   right: -30px; 
+}
+
+.movie{
+  height: 200px!important;
 }

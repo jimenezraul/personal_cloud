@@ -251,6 +251,18 @@
                                     {% endfor %} 
                                     {% endif %}
                                     {% else %}
+                                    {% if movies %}
+                                    {% for movie in movies %}
+                                            <div class="col-6 col-md-3 col-xl-2 text-center files">
+                                                <a href="{{ movie.youtube }}{{ movie.trailer }}">
+                                                    <img class="movie" id="myImg" src="{{ movie.img_url }}{{ movie.poster_path }}">
+                                                <h5 class="text-center"><strong>{{ movie.title }}</strong></h5>
+                                                </a>
+                                                <a class="download btn btn-b" style="display: none" href="{{ movie.file_url }}" download><i class="fas fa-cloud-download-alt"></i></a>
+                                                <a class="delete btn btn-d" style="display: none" href="{% url 'delete' movie.title %}"><i class="fas fa-trash-alt"></i></a>
+                                            </div> 
+                                    {% endfor %} 
+                                    {% else %}
                                     {% for file in files %}
                                             <div class="col-6 col-md-3 col-xl-2 text-center files">
                                                 <a href="{{ file.url }}">
@@ -265,6 +277,7 @@
                                                 <a class="delete btn btn-d" style="display: none" href="{% url 'delete' file.name %}"><i class="fas fa-trash-alt"></i></a>
                                             </div> 
                                     {% endfor %}  
+                                    {% endif %}
                                     {% endif %}
                                 </div>
                                 {% if dir_name != "Trash" %}

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
-from .models import UserId, Cloud
+from .models import UserId, Cloud, Movie
 import os
 import shutil
 import socket
@@ -99,7 +99,9 @@ def home_page(request):
                     movie_name = i['name'].split(x)[0]
                     movie = MovieApi()
                     movie.create_movie_data(movie_name, user, i['url'])
-
+        
+        movies = Movie.objects.filter(user=user)
+        movies = [i for i in movies for x in files if i.file_url == x["url"]]
         context = {
             "folders": folders,
             "files": files,
@@ -113,6 +115,7 @@ def home_page(request):
             "hostname": hostname,
             "current_path": media,
             "trash_count": trash_count,
+            "movies": movies,
         }
         return render(request, "cloud/index.html", context)
     except BaseException as e:
