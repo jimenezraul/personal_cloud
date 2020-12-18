@@ -20,7 +20,7 @@
                                     </form>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown no-arrow mx-1">
+                            <!-- <li class="nav-item dropdown no-arrow mx-1">
                                 <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="badge badge-danger badge-counter">3+</span><i class="fas fa-bell fa-fw"></i></a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in">
                                         <h6 class="dropdown-header">alerts center</h6>
@@ -92,8 +92,8 @@
                                         </a><a class="text-center dropdown-item small text-gray-500" href="#">Show All Alerts</a></div>
                                 </div>
                                 <div class="shadow dropdown-list dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown"></div>
-                            </li>
-                            <div class="d-none d-sm-block topbar-divider"></div>
+                            </li> -->
+                            <!-- <div class="d-none d-sm-block topbar-divider"></div> -->
                             <li class="nav-item dropdown no-arrow">
                                 <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small">{{ user }}</span><i class="fas fa-user-circle"></i></a>
                                     <div
@@ -168,6 +168,10 @@
                     <div class="col-12">
                         <div class="card shadow mb-4">
                             <div class="card-header d-flex justify-content-between align-items-center">
+                                {% if dir_name != "Trash" %}
+                                <div id="upload" class="upload"><i onclick="popup()" class="fas fa-cloud-upload-alt"></i></div>
+                                <div id="uploader" class="uploader" style="display: none"></div>
+                                {% endif %}
                                 {% if not back %}
                                 <a href="{% url 'go_back_directory' %}">
                                 
@@ -221,7 +225,7 @@
                                                     {% if folder.name == "Trash" %}
                                                     {{ folder.name }}
                                                         {% if trash_count != 0 %}
-                                                        <a href="#" class="badge badge-danger">{{trash_count}}</a>
+                                                        <p class="badge badge-danger">{{trash_count}}</p>
                                                         {% endif %}
                                                     {% else %}
                                                     {{ folder.name }}
@@ -246,7 +250,7 @@
                                     {% for file in files %}
                                             <div class="col-6 col-md-3 col-xl-2 text-center files">
                                                     <img id="myImg" src="{{ file.icon }}">
-                                                <h4 class="text-center"><strong>{{ file.name }}</strong></h4>
+                                                <h5 class="text-center"><strong>{{ file.name }}</strong></h5>
                                             </div> 
                                     {% endfor %} 
                                     {% endif %}
@@ -281,7 +285,7 @@
                                     {% endif %}
                                 </div>
                                 {% if dir_name != "Trash" %}
-                                <button class="plus-button" onclick="create()">+</button>
+                                <button class="plus-button" onclick="popup()">+</button>
                                 <div id="create" class="create_folder text-center" style="display: none">
                                     <div class="create-block">
                                         <h4><strong>Create a folder</strong></h4>
@@ -295,7 +299,7 @@
                                 </div>
                                 {% else %}
                                 {% if trash_count %}
-                                <button id="trash" class="plus-button-red" onclick="delete_f()"><i id="icon" class="fas fa-trash-alt"></i></button>
+                                <button id="trash" class="plus-button-red" onclick="popup()"><i id="icon" class="fas fa-trash-alt"></i></button>
                                 <div id="confirm" class="empty_trash text-center" style="display: none">
                                     <div class="trash-block">
                                     <h4><strong>Empty Trash</strong></h4>

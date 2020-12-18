@@ -30,7 +30,7 @@
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item"><a class="nav-link active" href="index.html"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{% url 'go_back_home' %}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="table.html"><i class="icon ion-android-archive"></i><span>Apps&nbsp;</span></a></li>
                     <li class="nav-item">
@@ -59,15 +59,11 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
         <script src="{% static 'cloud/assets/js/theme.js' %}"></script>
         <script>
+
+            var x, confirm, trash, icon, create, button, input, upload, uploader
+            
             function showAndHide(props){
-                    var x = document.querySelectorAll(props);
-                    var confirm = document.getElementById("confirm");
-                    var trash = document.getElementById("trash");
-                    var icon = document.getElementById("icon");
-                    var create = document.getElementById("create");
-                    var button = document.getElementsByClassName("plus-button");
-                    var input = document.querySelector("#input");
-                    
+                    x = document.querySelectorAll(props);
                     for (i = 0; i < x.length; i++) {
                         if(x[i].style.display === "none"){
                             x[i].style.display = "inline-block"; 
@@ -75,47 +71,78 @@
                             x[i].style.display = "none";
                         }
                     }
-                    window.onclick = function(event) {
-                        console.log(event.target)
-                        if (event.target == confirm || event.target == trash || event.target == icon) {
-                            confirm.style.display = "inline-block";
-                        }else{
-                            confirm.style.display = "none";
-                        }
-                    }
-                    window.onclick = function(event) {
-                        if (event.target == create || event.target == button[0] || event.target == input) {
-                            create.style.display = "inline-block";
-                        }else{
-                            create.style.display = "none";
-                        }
-                    }
+                    // window.onclick = function(event) {
+                    //     console.log(event.target)
+                    //     if (event.target == confirm || event.target == trash || event.target == icon) {
+                    //         confirm.style.display = "inline-block";
+                    //     }else{
+                    //         confirm.style.display = "none";
+                    //     }
+                    // }
+                    // window.onclick = function(event) {
+                    //     if (event.target == create || event.target == button[0] || event.target == input) {
+                    //         create.style.display = "inline-block";
+                    //     }else{
+                    //         create.style.display = "none";
+                    //     }
+                    // }
             }
-            function create(){
-                    var create = document.getElementById("create");
-                    var button = document.getElementsByClassName("plus-button");
-                    var input = document.querySelector("#input");
+            // function create(){
+            //     create = document.getElementById("create");
+            //     button = document.getElementsByClassName("plus-button");
+            //     input = document.querySelector("#input");
                     
-                    window.onclick = function(event) {
-                        if (event.target == create || event.target == button[0] || event.target == input) {
-                            create.style.display = "inline-block";
-                        }else{
-                            create.style.display = "none";
-                        }
-                    }
-            }
-            function delete_f(){
-                    var confirm = document.getElementById("confirm");
-                    var trash = document.getElementById("trash");
-                    var icon = document.getElementById("icon");
+            //     window.onclick = function(event) {
+            //         if (event.target == create || event.target == button[0] || event.target == input) {
+            //             create.style.display = "inline-block";
+            //             uploader.style.display = "none";
+            //         }else{
+            //             create.style.display = "none";
+            //         }
+            //     }
+            // }
+            // function delete_f(){
+            //     confirm = document.getElementById("confirm");
+            //     trash = document.getElementById("trash");
+            //     icon = document.getElementById("icon");
                     
-                    window.onclick = function(event) {
-                        if (event.target == confirm || event.target == trash || event.target == icon) {
-                            confirm.style.display = "inline-block";
-                        }else{
+            //     window.onclick = function(event) {
+            //         if (event.target == confirm || event.target == trash || event.target == icon) {
+            //             confirm.style.display = "inline-block";
+            //         }else{
+            //             confirm.style.display = "none";
+            //         }
+            //     }
+            // }
+
+            function popup(){
+                create = document.getElementById("create");
+                button = document.getElementsByClassName("plus-button");
+                input = document.querySelector("#input");
+                confirm = document.getElementById("confirm");
+                trash = document.getElementById("trash");
+                icon = document.getElementById("icon");
+                upload = document.getElementsByClassName("fa-cloud-upload-alt");
+                uploader = document.getElementById("uploader");
+
+                window.onclick = function(event) {
+                    if (event.target == upload[0]) {
+                        uploader.style.display = "inline-block";
+                        create.style.display = "none";
+                    }else if (event.target == confirm || event.target == trash || event.target == icon) {
+                        confirm.style.display = "inline-block";
+                    } else if (event.target == create || event.target == button[0] || event.target == input) {
+                        create.style.display = "inline-block";
+                        uploader.style.display = "none";
+                    } else{ 
+                        if (create == null || uploader == null){
                             confirm.style.display = "none";
+                        } else{
+                            create.style.display = "none";
+                            uploader.style.display = "none";
                         }
                     }
+                }
             }
             </script>
     {% endblock %}

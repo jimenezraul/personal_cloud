@@ -62,10 +62,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 #myImg {
   border-radius: 5px;
-  transition: 0.3s;
 }
-
-#myImg:hover {opacity: 0.7;}
 
 /* The Modal (background) */
 .modal {
@@ -178,6 +175,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 .folder:hover{
   transform: scale(1.1);
   
+  
 }
 
 .files, h4{
@@ -215,7 +213,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
   position: absolute;
   right: 50px;
   bottom: -25px;
-  box-shadow:1px .5rem 2rem rgba(0, 0, 0, 0.3)!important;
+  box-shadow:1px .5rem 2rem rgba(0, 0, 0, 0.2)!important;
   transition: transform .2s; /* Animation */
 }
 
@@ -239,7 +237,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
   position: absolute;
   right: 50px;
   bottom: -25px;
-  box-shadow:1px .5rem 2rem rgba(0, 0, 0, 0.3)!important;
+  box-shadow:1px .5rem 2rem rgba(0, 0, 0, 0.2)!important;
   transition: transform .2s; /* Animation */
 }
 
@@ -260,7 +258,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
   min-width: 200px;
   right: 150px;
   bottom: -40px;
-  box-shadow:1px .5rem 2rem rgba(0, 0, 0, 0.3)!important;
+  box-shadow:1px .5rem 2rem rgba(0, 0, 0, 0.2)!important;
 }
 
 .empty_trash{
@@ -271,7 +269,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
   min-height: 100px;
   right: 150px;
   bottom: -40px;
-  box-shadow:1px .5rem 2rem rgba(0, 0, 0, 0.3)!important;
+  box-shadow:1px .5rem 2rem rgba(0, 0, 0, 0.2)!important;
   position: absolute;
 }
 
@@ -309,4 +307,47 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 .movie{
   height: 200px!important;
+}
+
+.card-header{
+  position: relative;
+}
+
+.upload{
+  position: absolute;
+  right: 57px;
+}
+
+.upload i{
+  color: #3cb6ea!important;
+  cursor: pointer;
+  font-size: 40px;
+}
+
+.upload i:hover{
+  color: #3ec4fe!important;
+}
+
+.uploader{
+  position: absolute;
+  z-index: 5;
+  top: 65px;
+  right: 47px;
+  height: 100px;
+  border-radius: 5px;
+  width: 400px;
+  background-color: #ffffff;
+  box-shadow:0px .2rem 2rem rgba(0, 0, 0, 0.2)!important;
+}
+
+.uploader:after {
+  content: "";
+  position: absolute;
+  border-bottom: 20px solid rgb(255, 255, 255);
+  border-right: 20px solid transparent;
+  border-left: 20px solid transparent;
+  height: 0px;
+  width: 0px;
+  top: -15px;
+  right: 15px; 
 }
