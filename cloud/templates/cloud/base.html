@@ -59,11 +59,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
         <script src="{% static 'cloud/assets/js/theme.js' %}"></script>
         <script>
-
-            var x, confirm, trash, icon, create, button, input, upload, uploader
-            
             function showAndHide(props){
-                    x = document.querySelectorAll(props);
+                var x = document.querySelectorAll(props);
                     for (i = 0; i < x.length; i++) {
                         if(x[i].style.display === "none"){
                             x[i].style.display = "inline-block"; 
@@ -71,79 +68,50 @@
                             x[i].style.display = "none";
                         }
                     }
-                    // window.onclick = function(event) {
-                    //     console.log(event.target)
-                    //     if (event.target == confirm || event.target == trash || event.target == icon) {
-                    //         confirm.style.display = "inline-block";
-                    //     }else{
-                    //         confirm.style.display = "none";
-                    //     }
-                    // }
-                    // window.onclick = function(event) {
-                    //     if (event.target == create || event.target == button[0] || event.target == input) {
-                    //         create.style.display = "inline-block";
-                    //     }else{
-                    //         create.style.display = "none";
-                    //     }
-                    // }
             }
-            // function create(){
-            //     create = document.getElementById("create");
-            //     button = document.getElementsByClassName("plus-button");
-            //     input = document.querySelector("#input");
-                    
-            //     window.onclick = function(event) {
-            //         if (event.target == create || event.target == button[0] || event.target == input) {
-            //             create.style.display = "inline-block";
-            //             uploader.style.display = "none";
-            //         }else{
-            //             create.style.display = "none";
-            //         }
-            //     }
-            // }
-            // function delete_f(){
-            //     confirm = document.getElementById("confirm");
-            //     trash = document.getElementById("trash");
-            //     icon = document.getElementById("icon");
-                    
-            //     window.onclick = function(event) {
-            //         if (event.target == confirm || event.target == trash || event.target == icon) {
-            //             confirm.style.display = "inline-block";
-            //         }else{
-            //             confirm.style.display = "none";
-            //         }
-            //     }
-            // }
 
-            function popup(){
-                create = document.getElementById("create");
-                button = document.getElementsByClassName("plus-button");
-                input = document.querySelector("#input");
-                confirm = document.getElementById("confirm");
-                trash = document.getElementById("trash");
-                icon = document.getElementById("icon");
-                upload = document.getElementsByClassName("fa-cloud-upload-alt");
-                uploader = document.getElementById("uploader");
-
-                window.onclick = function(event) {
-                    if (event.target == upload[0]) {
-                        uploader.style.display = "inline-block";
-                        create.style.display = "none";
-                    }else if (event.target == confirm || event.target == trash || event.target == icon) {
-                        confirm.style.display = "inline-block";
-                    } else if (event.target == create || event.target == button[0] || event.target == input) {
+            var create = document.getElementById("create");
+            var upload = document.getElementById("upload");
+            var uploader = document.getElementById("uploader");
+            var upload_block = document.getElementById("block");
+            var create_block = document.getElementById("create_block");
+            var trash_block = document.getElementById("trash-block");
+            var trash = document.getElementById("confirm");
+           
+            document.addEventListener('click', function(event) {
+                if(upload == null){
+                    var trashInside = trash_block.contains(event.target);
+                    if (trashInside) {
+                        trash.style.display = "inline-block";
+                    }else{
+                        trash.style.display = "none";
+                    }
+                }else{
+                    var uploadInside = upload.contains(event.target);
+                    var uploaderInside = uploader.contains(event.target);
+                    var createInside = create_block.contains(event.target);
+                    if (uploaderInside) {
+                    create.style.display = "none";
+                    uploader.style.display = "inline-block";
+                    }else if (createInside) {
                         create.style.display = "inline-block";
                         uploader.style.display = "none";
-                    } else{ 
-                        if (create == null || uploader == null){
-                            confirm.style.display = "none";
-                        } else{
-                            create.style.display = "none";
-                            uploader.style.display = "none";
-                        }
+                    }else if (uploadInside) {
+                        create.style.display = "none";
+                        uploader.style.display = "inline-block";
+                    }else{
+                        create.style.display = "none";
+                        uploader.style.display = "none";
                     }
                 }
-            }
+                
+            });
+            
+                // Add the following code if you want the name of the file appear on select
+                $(".custom-file-input").on("change", function() {
+                  var fileName = $(this).val().split("\\").pop();
+                  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                });
             </script>
     {% endblock %}
 </body>

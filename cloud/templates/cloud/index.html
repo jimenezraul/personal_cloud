@@ -169,8 +169,23 @@
                         <div class="card shadow mb-4">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 {% if dir_name != "Trash" %}
-                                <div id="upload" class="upload"><i onclick="popup()" class="fas fa-cloud-upload-alt"></i></div>
-                                <div id="uploader" class="uploader" style="display: none"></div>
+                                <div id="upload" class="upload"><i class="fas fa-cloud-upload-alt"></i></div>
+                                <div id="uploader" class="uploader" style="display: none">
+                                    <form>
+                                        <div class="row justify-content-center align-items-center p-4">
+                                            <div class="col-12">
+                                                <h4><strong>Upload Filex</strong></h4>
+                                            </div>
+                                            <div class="custom-file col-9">
+                                            <input type="file" class="custom-file-input" id="customFile">
+                                            <label class="custom-file-label" for="customFile">Choose file</label>
+                                            </div>
+                                            <div class="col-3">
+                                                <button class="btn btn-blue">Submit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
                                 {% endif %}
                                 {% if not back %}
                                 <a href="{% url 'go_back_directory' %}">
@@ -285,7 +300,8 @@
                                     {% endif %}
                                 </div>
                                 {% if dir_name != "Trash" %}
-                                <button class="plus-button" onclick="popup()">+</button>
+                                <div id="create_block">
+                                <button class="plus-button">+</button>
                                 <div id="create" class="create_folder text-center" style="display: none">
                                     <div class="create-block">
                                         <h4><strong>Create a folder</strong></h4>
@@ -297,9 +313,11 @@
                                         </form>
                                     </div>
                                 </div>
+                            </div>
                                 {% else %}
                                 {% if trash_count %}
-                                <button id="trash" class="plus-button-red" onclick="popup()"><i id="icon" class="fas fa-trash-alt"></i></button>
+                                <div id="trash-block">
+                                <button id="trash" class="plus-button-red"><i id="icon" class="fas fa-trash-alt"></i></button>
                                 <div id="confirm" class="empty_trash text-center" style="display: none">
                                     <div class="trash-block">
                                     <h4><strong>Empty Trash</strong></h4>
@@ -309,6 +327,7 @@
                                     </form>
                                     </div>
                                 </div>
+                            </div>
                                 {% endif %}
                                 {% endif %}
                             </div>

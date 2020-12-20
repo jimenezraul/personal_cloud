@@ -333,7 +333,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
   z-index: 5;
   top: 65px;
   right: 47px;
-  height: 100px;
+  min-height: 100px;
   border-radius: 5px;
   width: 400px;
   background-color: #ffffff;
@@ -350,4 +350,8 @@ body {font-family: Arial, Helvetica, sans-serif;}
   width: 0px;
   top: -15px;
   right: 15px; 
+}
+
+.custom-file-label{
+
 }
