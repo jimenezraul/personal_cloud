@@ -172,6 +172,10 @@ body {font-family: Arial, Helvetica, sans-serif;}
   transition: transform .2s; /* Animation */
 }
 
+.folder{
+  position: relative;
+}
+
 .folder:hover{
   transform: scale(1.1);
   
@@ -212,7 +216,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
   width: 75px;
   position: absolute;
   right: 50px;
-  bottom: -25px;
+  bottom: -35px;
   box-shadow:1px .5rem 2rem rgba(0, 0, 0, 0.2)!important;
   transition: transform .2s; /* Animation */
 }
@@ -257,7 +261,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
   min-height: 100px;
   min-width: 200px;
   right: 150px;
-  bottom: -40px;
+  bottom: -50px;
   box-shadow:1px .5rem 2rem rgba(0, 0, 0, 0.2)!important;
 }
 
@@ -349,9 +353,22 @@ body {font-family: Arial, Helvetica, sans-serif;}
   height: 0px;
   width: 0px;
   top: -15px;
-  right: 15px; 
+  right: 17px; 
 }
 
-.custom-file-label{
+.trash{
+  position: absolute;
+  bottom: -40px;
+  left: 60px;
+  border-radius: 5px;
+  transition: transform .2s; /* Animation */
+}
+.trash:hover{
+  transform: scale(1.2);
+}
 
+.badge-danger{
+  position: absolute;
+  font-size: 20px;
+  right: 0;
 }

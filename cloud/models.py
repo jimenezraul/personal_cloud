@@ -34,7 +34,7 @@ class Cloud(models.Model):
     user_root = models.CharField(max_length=1000, default="")
     unwanted_files = ('.download',)
     files_icons = ['.mp3', '.mp4', ".m4v", ".pdf"]
-    videos_files = [".mp4", ".m4v", ".mov"]
+    videos_files = [".mp4", ".m4v", ".mov", ".mkv"]
     img_icon = ['.jpg', '.png']
     file = 'file.svg'
     icons = [
@@ -63,7 +63,11 @@ class Cloud(models.Model):
             source = source + "1"
             self.move_to_trash(source)
         else:
-            destination = shutil.move(os.path.join(
+            if os.path.exists(os.path.join(self.current_dir, "T_" + source)):
+                shutil.move(os.path.join(self.current_dir, source), self.trash())
+                shutil.move(os.path.join(self.current_dir, "T_" + source), self.trash())
+            else:
+                shutil.move(os.path.join(
                 self.current_dir, source), self.trash())
 
     def go_back_home(self):
@@ -192,3 +196,33 @@ class Movie(models.Model):
 
     def __str__(self):
         return self.title
+
+    def file_name(self):
+        file = self.file_url.split("/")
+        file = file[-1]
+        return file
+
+def user_directory_path(instance, filename):
+    user = instance.user
+    cloud = Cloud.objects.get(user=user)
+    directory = cloud.current_dir
+    # file will be uploaded to MEDIA_ROOT/<id>/<filename>
+    return directory + "/"+ filename
+
+class Upload(models.Model):
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
+    description = models.CharField(max_length=255, blank=True)
+    document = models.FileField(upload_to=user_directory_path, max_length=1000)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+
+
+    # def photo(self, *args, **kwargs):
+    #     try:
+    #         cloud = Cloud.objects.get(id=self.id)
+    #         document = models.FileField(upload_to=cloud.current_dir)
+    #     except:
+    #         pass
+    #     super(Upload, self).save(*args, **kwargs)

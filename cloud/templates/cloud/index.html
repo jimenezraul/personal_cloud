@@ -20,80 +20,6 @@
                                     </form>
                                 </div>
                             </li>
-                            <!-- <li class="nav-item dropdown no-arrow mx-1">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="badge badge-danger badge-counter">3+</span><i class="fas fa-bell fa-fw"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in">
-                                        <h6 class="dropdown-header">alerts center</h6>
-                                        <a class="d-flex align-items-center dropdown-item" href="#">
-                                            <div class="mr-3">
-                                                <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 12, 2019</span>
-                                                <p>A new monthly report is ready to download!</p>
-                                            </div>
-                                        </a>
-                                        <a class="d-flex align-items-center dropdown-item" href="#">
-                                            <div class="mr-3">
-                                                <div class="bg-success icon-circle"><i class="fas fa-donate text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 7, 2019</span>
-                                                <p>$290.29 has been deposited into your account!</p>
-                                            </div>
-                                        </a>
-                                        <a class="d-flex align-items-center dropdown-item" href="#">
-                                            <div class="mr-3">
-                                                <div class="bg-warning icon-circle"><i class="fas fa-exclamation-triangle text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 2, 2019</span>
-                                                <p>Spending Alert: We've noticed unusually high spending for your account.</p>
-                                            </div>
-                                        </a><a class="text-center dropdown-item small text-gray-500" href="#">Show All Alerts</a></div>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown no-arrow mx-1">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-envelope fa-fw"></i><span class="badge badge-danger badge-counter">7</span></a>
-                                    <div class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in">
-                                        <h6 class="dropdown-header">alerts center</h6>
-                                        <a class="d-flex align-items-center dropdown-item" href="#">
-                                            <div class="dropdown-list-image mr-3"><img class="rounded-circle" src="{% static 'cloud/assets/img/avatars/avatar4.jpeg' %}">
-                                                <div class="bg-success status-indicator"></div>
-                                            </div>
-                                            <div class="font-weight-bold">
-                                                <div class="text-truncate"><span>Hi there! I am wondering if you can help me with a problem I've been having.</span></div>
-                                                <p class="small text-gray-500 mb-0">Emily Fowler - 58m</p>
-                                            </div>
-                                        </a>
-                                        <a class="d-flex align-items-center dropdown-item" href="#">
-                                            <div class="dropdown-list-image mr-3"><img class="rounded-circle" src="{% static 'cloud/assets/img/avatars/avatar2.jpeg' %}">
-                                                <div class="status-indicator"></div>
-                                            </div>
-                                            <div class="font-weight-bold">
-                                                <div class="text-truncate"><span>I have the photos that you ordered last month!</span></div>
-                                                <p class="small text-gray-500 mb-0">Jae Chun - 1d</p>
-                                            </div>
-                                        </a>
-                                        <a class="d-flex align-items-center dropdown-item" href="#">
-                                            <div class="dropdown-list-image mr-3"><img class="rounded-circle" src="{% static 'cloud/assets/img/avatars/avatar3.jpeg' %}">
-                                                <div class="bg-warning status-indicator"></div>
-                                            </div>
-                                            <div class="font-weight-bold">
-                                                <div class="text-truncate"><span>Last month's report looks great, I am very happy with the progress so far, keep up the good work!</span></div>
-                                                <p class="small text-gray-500 mb-0">Morgan Alvarez - 2d</p>
-                                            </div>
-                                        </a>
-                                        <a class="d-flex align-items-center dropdown-item" href="#">
-                                            <div class="dropdown-list-image mr-3"><img class="rounded-circle" src="{% static 'cloud/assets/img/avatars/avatar5.jpeg' %}">
-                                                <div class="bg-success status-indicator"></div>
-                                            </div>
-                                            <div class="font-weight-bold">
-                                                <div class="text-truncate"><span>Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</span></div>
-                                                <p class="small text-gray-500 mb-0">Chicken the Dog · 2w</p>
-                                            </div>
-                                        </a><a class="text-center dropdown-item small text-gray-500" href="#">Show All Alerts</a></div>
-                                </div>
-                                <div class="shadow dropdown-list dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown"></div>
-                            </li> -->
-                            <!-- <div class="d-none d-sm-block topbar-divider"></div> -->
                             <li class="nav-item dropdown no-arrow">
                                 <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small">{{ user }}</span><i class="fas fa-user-circle"></i></a>
                                     <div
@@ -171,17 +97,18 @@
                                 {% if dir_name != "Trash" %}
                                 <div id="upload" class="upload"><i class="fas fa-cloud-upload-alt"></i></div>
                                 <div id="uploader" class="uploader" style="display: none">
-                                    <form>
+                                    <form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
                                         <div class="row justify-content-center align-items-center p-4">
                                             <div class="col-12">
-                                                <h4><strong>Upload Filex</strong></h4>
+                                                <h4><strong>Upload File</strong></h4>
                                             </div>
                                             <div class="custom-file col-9">
-                                            <input type="file" class="custom-file-input" id="customFile">
+                                            <input type="file" class="custom-file-input" id="customFile" name="file">
                                             <label class="custom-file-label" for="customFile">Choose file</label>
                                             </div>
                                             <div class="col-3">
-                                                <button class="btn btn-blue">Submit</button>
+                                                <button type="submit" class="btn btn-blue">Submit</button>
                                             </div>
                                         </div>
                                     </form>
@@ -190,13 +117,13 @@
                                 {% if not back %}
                                 <a href="{% url 'go_back_directory' %}">
                                 
-                                    <i class="fas fa-chevron-left"> Back</i>
+                                    <i class="fas fa-chevron-left text-dark"> Back</i>
                             
                                 </a>
-                                <h6 class="text-primary font-weight-bold m-0">{{dir_name}}</h6>
+                                <h6 class="text-primary font-weight-bold m-0 text-dark">{{dir_name}}</h6>
                                 {% else %}
                                 <i class=""></i>
-                                <h6 class="text-primary font-weight-bold m-0">My Cloud</h6>
+                                <h6 class="text-primary font-weight-bold m-0 text-dark">My Cloud</h6>
                                 {% endif %}
                                 {% if dir_name == "Trash" %}
                                 <div class="dropdown no-arrow">
@@ -230,21 +157,29 @@
                                     {% endfor %}
                                     {% endif %}
                                     {% else %}
+                                    <div class="trash">
+                                        <a href="{% url 'directory' 'Trash' %}">
+                                        <img class="mb-2" src="static/cloud/assets/img/trash.svg">
+                                        <strong>
+                                                {% if trash_count != 0 %}
+                                                    <p class="badge badge-danger">{{trash_count}}</p>
+                                                {% endif %}
+                                        </strong>
+                                        </a>
+                                    </div>
                                     {% for folder in folders %}
-                                        <div class="col-6 col-md-3 col-xl-2 text-center folder">
+                                    {% if folder.name == "Trash" %}
+                                        <!-- Display none -->
+                                    {% else %}
+                                        <div class="col-6 col-md-3 col-xl-2 text-center folder mb-3">
                                             <a href="{% url 'directory' folder.name %}">
-                                                
                                             <img class="mb-2" src="{{ folder.icon }}">
                                             <h4 class="text-center">
                                                 <strong>
-                                                    {% if folder.name == "Trash" %}
                                                     {{ folder.name }}
-                                                        {% if trash_count != 0 %}
+                                                    <!-- {% if trash_count != 0 %}
                                                         <p class="badge badge-danger">{{trash_count}}</p>
-                                                        {% endif %}
-                                                    {% else %}
-                                                    {{ folder.name }}
-                                                    {% endif %}
+                                                    {% endif %} -->
                                                 </strong></h4>
                                                
                                             </a>
@@ -253,7 +188,7 @@
                                             <a class="delete btn btn-d" style="display: none" href="{% url 'delete' folder.name %}"><i class="fas fa-trash-alt"></i></a>
                                             {% endif %}
                                         </div>
-                                    
+                                    {% endif %}
                                     {% endfor %}
                                     {% endif %}
                                 
@@ -263,7 +198,7 @@
                                     {% if not trash_count %}
                                     {% else %}
                                     {% for file in files %}
-                                            <div class="col-6 col-md-3 col-xl-2 text-center files">
+                                            <div class="col-6 col-md-3 col-xl-2 text-center files mb-3"">
                                                     <img id="myImg" src="{{ file.icon }}">
                                                 <h5 class="text-center"><strong>{{ file.name }}</strong></h5>
                                             </div> 
@@ -278,12 +213,12 @@
                                                 <h5 class="text-center"><strong>{{ movie.title }}</strong></h5>
                                                 </a>
                                                 <a class="download btn btn-b" style="display: none" href="{{ movie.file_url }}" download><i class="fas fa-cloud-download-alt"></i></a>
-                                                <a class="delete btn btn-d" style="display: none" href="{% url 'delete' movie.title %}"><i class="fas fa-trash-alt"></i></a>
-                                            </div> 
+                                                <a class="delete btn btn-d" style="display: none" href="{% url 'delete' movie.file_name %}"><i class="fas fa-trash-alt"></i></a>
+                                            </div>
                                     {% endfor %} 
                                     {% else %}
                                     {% for file in files %}
-                                            <div class="col-6 col-md-3 col-xl-2 text-center files">
+                                            <div class="col-6 col-md-3 col-xl-2 text-center files mb-3"">
                                                 <a href="{{ file.url }}">
                                                     {% if file.thumbnail %}
                                                     <img id="myImg" src="{{ file.thumbnail }}">
@@ -307,7 +242,7 @@
                                         <h4><strong>Create a folder</strong></h4>
                                         <form class="form-inline d-inline-block  mw-100 navbar-search" action="{% url 'create_folder' %}" method="POST">
                                             {% csrf_token %}
-                                            <div class="input-group"><input id="input" class="form-control border-0 small bg-search" type="text" name="folder" placeholder="Folder name" required>
+                                            <div class="input-group"><input id="input" class="form-control" type="text" name="folder" placeholder="Folder name" required>
                                                 <div class="input-group-append"><button class="btn py-0 btn-blue" type="submit">Create</button></div>
                                             </div>
                                         </form>

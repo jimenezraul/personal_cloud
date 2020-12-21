@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
-from .models import UserId, Cloud, Movie
+from .models import UserId, Cloud, Movie, Upload
 import os
 import shutil
 import socket
@@ -91,7 +91,7 @@ def home_page(request):
         media = cloud.get_media_root()
         trash = cloud.trash()
         trash_count = len([name for name in os.listdir(
-            trash) if not name.startswith(".")])
+            trash) if not name.startswith(".") and not name.startswith("T_")])
 
         for i in files:
             for x in cloud.videos_files:
@@ -99,7 +99,7 @@ def home_page(request):
                     movie_name = i['name'].split(x)[0]
                     movie = MovieApi()
                     movie.create_movie_data(movie_name, user, i['url'])
-        
+    
         movies = Movie.objects.filter(user=user)
         movies = [i for i in movies for x in files if i.file_url == x["url"]]
         context = {
@@ -217,4 +217,16 @@ def create_folder(request):
 def empty_trash(request):
     cloud = Cloud.objects.filter(user=request.user)[0]
     cloud.empty_trash()
+    return redirect("home")
+
+def upload_file(request):
+    user = request.user
+    cloud = Cloud.objects.filter(user=user)
+    if request.method == 'POST' and request.FILES['file']:
+        instance = Upload(user=user)
+        instance.document = request.FILES['file']
+        instance.save()
+        upload = Upload.objects.filter(user=user)
+        for i in upload:
+            i.delete()
     return redirect("home")

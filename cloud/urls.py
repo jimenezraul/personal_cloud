@@ -13,4 +13,5 @@ urlpatterns = [
     path('delete/<str:name>/', views.delete_item, name='delete'),
     path('create/', views.create_folder, name='create_folder'),
     path('empty_trash/', views.empty_trash, name='empty_trash'),
+    path('upload/', views.upload_file, name='upload'),
 ]

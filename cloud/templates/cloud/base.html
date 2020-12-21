@@ -15,8 +15,7 @@
     <link rel="stylesheet" href="{% static 'cloud/assets/fonts/typicons.min.css' %}">
     <link rel="stylesheet" href="{% static 'cloud/assets/fonts/fontawesome5-overrides.min.css' %}">
     <link rel="stylesheet" href="{% static 'cloud/assets/css/untitled.css' %}">
-    <script>
-    </script>
+    
     
 </head>
 
@@ -90,6 +89,7 @@
                     var uploadInside = upload.contains(event.target);
                     var uploaderInside = uploader.contains(event.target);
                     var createInside = create_block.contains(event.target);
+                   
                     if (uploaderInside) {
                     create.style.display = "none";
                     uploader.style.display = "inline-block";
