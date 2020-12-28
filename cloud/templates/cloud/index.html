@@ -199,7 +199,11 @@
                                     {% else %}
                                     {% for file in files %}
                                             <div class="col-6 col-md-6 col-lg-4 col-xl-3 text-center files mb-3"">
+                                                {% if file.thumbnail %}
+                                                        <img id="myImg" src="{{ file.thumbnail }}">
+                                                        {% else %}
                                                     <img id="myImg" src="{{ file.icon }}">
+                                                    {% endif %}
                                                 <h5 class="text-center"><strong>{{ file.name }}</strong></h5>
                                             </div> 
                                     {% endfor %} 
