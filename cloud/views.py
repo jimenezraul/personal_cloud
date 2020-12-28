@@ -134,7 +134,7 @@ def home_page(request):
         instance.save()
         return redirect("home")
 
-
+@login_required(login_url='login')
 def go_back_directory(request):
     user = request.user
     cloud = Cloud.objects.filter(user=user)[0]
@@ -145,7 +145,7 @@ def go_back_directory(request):
     instance.save()
     return redirect("home")
 
-
+@login_required(login_url='login')
 def go_back_home(request):
     user = request.user
     database = str(UserId.objects.filter(user=user)[0])
@@ -156,7 +156,7 @@ def go_back_home(request):
     instance.save()
     return redirect("home")
 
-
+@login_required(login_url='login')
 def open_directory(request, directory):
     user = request.user
     cloud = Cloud.objects.filter(user=user)[0]
@@ -188,7 +188,7 @@ def login_view(request):
     }
     return render(request, "cloud/login.html", context)
 
-
+@login_required(login_url='login')
 def logout_view(request):
     user = request.user
     cloud = Cloud.objects.filter(user=user)[0]
@@ -198,7 +198,7 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
-
+@login_required(login_url='login')
 def delete_item(request, name):
     cloud = Cloud.objects.filter(user=request.user)[0]
     cloud.move_to_trash(name)

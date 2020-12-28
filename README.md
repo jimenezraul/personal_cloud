@@ -27,4 +27,7 @@ Django Project
 ## Upload file
 ![Image description](Screen%20shots/upload.png)
 
+## Trash
+![Image description](Screen%20shots/trash.png)
+
 
