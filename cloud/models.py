@@ -51,16 +51,37 @@ class Cloud(models.Model):
         return self.home_dir + "/" + self.uid + "/Trash"
 
     def create_directory(self, directory):
-        os.chdir(self.current_dir)
-        os.mkdir(directory)  # create a directory
+        try:
+            os.chdir(self.current_dir)
+            os.mkdir(directory)  # create a directory
+        except:
+            direc = directory
+            counter = 1
+            while os.path.exists(directory):# if Dir exists add a number
+                directory = direc + str(counter)
+                counter += 1     
+            os.mkdir(directory)
+                    
+            
 
     def move_to_trash(self, source):
         t = self.trash()
         os.chdir(t)
-        if os.path.exists(source):
-            os.rename(os.path.join(self.current_dir, source),
-                      os.path.join(self.current_dir, source + "1"))
-            source = source + "1"
+        split_dir = self.current_dir.split("/personal_cloud/") # split dir to get just the media path
+        split_dir = split_dir[1]
+        path = os.path.join(split_dir, source)
+        movie = Movie.objects.filter(user=self.user)
+        for i in movie:
+            if i.file_url == path:  # if the file url equals source, delete object
+                i.delete()
+        p = source
+        count = 1
+        if os.path.exists(p):# check if trash folder contain folder with the same name
+            while os.path.exists(source):
+                source = p + str(count)
+                count += 1
+            os.rename(os.path.join(self.current_dir, p),
+                        os.path.join(self.current_dir, source))
             self.move_to_trash(source)
         else:
             if os.path.exists(os.path.join(self.current_dir, "T_" + source)):
@@ -171,11 +192,19 @@ class Cloud(models.Model):
             for infile in glob.glob("*"+i):
                 im = Image.open(infile)
                 # convert to thumbnail image
-                im.thumbnail((128, 128), Image.ANTIALIAS)
+                im.thumbnail((200, 200), Image.ANTIALIAS)
                 # don't save if thumbnail already exists
                 if infile[0:2] != "T_":
                     # prefix thumbnail file with T_
                     im.save("T_" + infile)
+
+    def rename(self, old_name, new_name):
+        filename, file_extension = os.path.splitext(os.path.join(self.current_dir, old_name))
+        os.rename(os.path.join(self.current_dir, old_name),
+                        os.path.join(self.current_dir, new_name + file_extension))
+        os.rename(os.path.join(self.current_dir, "T_" + old_name),
+                        os.path.join(self.current_dir, "T_" + new_name + file_extension))
+        
 ######################## End Cloud model ########################
 
 
@@ -217,12 +246,3 @@ class Upload(models.Model):
     document = models.FileField(upload_to=user_directory_path, max_length=1000)
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
-
-
-    # def photo(self, *args, **kwargs):
-    #     try:
-    #         cloud = Cloud.objects.get(id=self.id)
-    #         document = models.FileField(upload_to=cloud.current_dir)
-    #     except:
-    #         pass
-    #     super(Upload, self).save(*args, **kwargs)

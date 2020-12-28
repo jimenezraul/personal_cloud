@@ -312,6 +312,9 @@ body {font-family: Arial, Helvetica, sans-serif;}
 .movie{
   height: 200px!important;
 }
+.movie:hover{
+  box-shadow: .3rem .3rem 1rem rgba(0, 0, 0, 0.529)!important;
+}
 
 .card-header{
   position: relative;
@@ -371,4 +374,33 @@ body {font-family: Arial, Helvetica, sans-serif;}
   position: absolute;
   font-size: 20px;
   right: 0;
+}
+
+.fa-pen-square{
+  color: #3cb6ea!important;
+  position: absolute;
+  font-size: 35px;
+  top: -2px;
+  right: -22px;
+}
+
+.fa-pen-square:hover{
+  color: #3ec4fe!important;
+}
+
+.fa-window-close{
+  color: #ea3c3c!important;
+  position: absolute;
+  font-size: 35px;
+  top: -2px;
+  right: -22px;
+}
+
+.fa-window-close:hover{
+  color: #ec1f1f!important;
+}
+
+.edit{
+  border-radius: 5px;
+  box-shadow: .3rem .3rem 2rem rgba(0, 0, 0, 0.201)!important;
 }

@@ -221,7 +221,7 @@ def empty_trash(request):
 
 def upload_file(request):
     user = request.user
-    cloud = Cloud.objects.filter(user=user)
+    cloud = Cloud.objects.filter(user=user)[0]
     if request.method == 'POST' and request.FILES['file']:
         instance = Upload(user=user)
         instance.document = request.FILES['file']
@@ -229,4 +229,13 @@ def upload_file(request):
         upload = Upload.objects.filter(user=user)
         for i in upload:
             i.delete()
+    return redirect("home")
+
+def rename(request, name):
+    user = request.user
+    cloud = Cloud.objects.filter(user=user)[0]
+    print(cloud.current_dir)
+    if request.method == 'POST':
+        new_name = request.POST['edit']
+        cloud.rename(name, new_name)  
     return redirect("home")

@@ -14,4 +14,5 @@ urlpatterns = [
     path('create/', views.create_folder, name='create_folder'),
     path('empty_trash/', views.empty_trash, name='empty_trash'),
     path('upload/', views.upload_file, name='upload'),
+    path('rename/<name>', views.rename, name='rename'),
 ]

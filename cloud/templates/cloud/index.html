@@ -132,7 +132,7 @@
                                 {% else %}
                                 <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
                                     <div class="dropdown-menu shadow dropdown-menu-right animated--fade-in">
-                                        <p class="text-center dropdown-header">Files Options</p><a class="dropdown-item" onclick="showAndHide('.download')">&nbsp;Download</a><a class="dropdown-item" onclick="showAndHide('.delete')">&nbsp;Move to Trash</a>
+                                        <p class="text-center dropdown-header">Files Options</p><a class="dropdown-item" onclick="showAndHide('.rename')">&nbsp;Rename</a><a class="dropdown-item" onclick="showAndHide('.download')">&nbsp;Download</a><a class="dropdown-item" onclick="showAndHide('.delete')">&nbsp;Move to Trash</a>
                                         </div>
                                 </div>
                                 {% endif %}
@@ -171,7 +171,7 @@
                                     {% if folder.name == "Trash" %}
                                         <!-- Display none -->
                                     {% else %}
-                                        <div class="col-6 col-md-3 col-xl-2 text-center folder mb-3">
+                                        <div class="col-6 col-md-6 col-lg-4 col-xl-3 text-center folder mb-3">
                                             <a href="{% url 'directory' folder.name %}">
                                             <img class="mb-2" src="{{ folder.icon }}">
                                             <h4 class="text-center">
@@ -193,12 +193,12 @@
                                     {% endif %}
                                 
                                 </div>
-                                <div class="row mt-4">
+                                <div id="row" class="row mt-4">
                                     {% if dir_name == "Trash" %}
                                     {% if not trash_count %}
                                     {% else %}
                                     {% for file in files %}
-                                            <div class="col-6 col-md-3 col-xl-2 text-center files mb-3"">
+                                            <div class="col-6 col-md-6 col-lg-4 col-xl-3 text-center files mb-3"">
                                                     <img id="myImg" src="{{ file.icon }}">
                                                 <h5 class="text-center"><strong>{{ file.name }}</strong></h5>
                                             </div> 
@@ -207,7 +207,7 @@
                                     {% else %}
                                     {% if movies %}
                                     {% for movie in movies %}
-                                            <div class="col-6 col-md-3 col-xl-2 text-center files">
+                                            <div class="col-6 col-md-6 col-lg-4 col-xl-3 text-center files mb-3">
                                                 <a href="{{ movie.youtube }}{{ movie.trailer }}">
                                                     <img class="movie" id="myImg" src="{{ movie.img_url }}{{ movie.poster_path }}">
                                                 <h5 class="text-center"><strong>{{ movie.title }}</strong></h5>
@@ -218,17 +218,37 @@
                                     {% endfor %} 
                                     {% else %}
                                     {% for file in files %}
-                                            <div class="col-6 col-md-3 col-xl-2 text-center files mb-3"">
+                                            <div class="col-6 col-md-6 col-lg-3 col-xl-3 text-center files mb-3">
+                                                
                                                 <a href="{{ file.url }}">
-                                                    {% if file.thumbnail %}
-                                                    <img id="myImg" src="{{ file.thumbnail }}">
-                                                    {% else %}
-                                                    <img id="myImg" src="{{ file.icon }}">
-                                                    {% endif %}
-                                                <h4 class="text-center"><strong>{{ file.name }}</strong></h4>
+                                                    <div class="row justify-content-center">
+                                                        <div class="position-relative col-8">
+                                                        {% if file.thumbnail %}
+                                                        <img id="myImg" src="{{ file.thumbnail }}">
+                                                        {% else %}
+                                                        <img id="myImg" src="{{ file.icon }}">
+                                                        {% endif %}
+                                                        <a>
+                                                        <i class="rename fas fa-pen-square" style="display: none;"></i>
+                                                        </a>
+                                                        </div>
+                                                    </div>
+                                                <p class="text-center"><strong>{{ file.name }}</strong></p>
                                                 </a>
-                                                <a class="download btn btn-b" style="display: none" href="{{ file.url }}" download><i class="fas fa-cloud-download-alt"></i></a>
-                                                <a class="delete btn btn-d" style="display: none" href="{% url 'delete' file.name %}"><i class="fas fa-trash-alt"></i></a>
+                                                <div class="edit p-3" style="display: none">
+                                                    <h5><strong>Rename</strong></h5>
+                                                    <form action="{% url 'rename' file.name %}" method="POST">
+                                                        {% csrf_token %}
+                                                    <div class="input-group">
+                                                        <input class="form-control" type="text" name="edit" placeholder="{{ file.name }}" required>
+                                                        <div class="input-group-append">
+                                                            <button class="btn py-0 btn-blue" type="submit">Submit</button>
+                                                        </div>
+                                                    </form>
+                                                    </div>
+                                                </div>
+                                                <a class="download btn btn-b mt-2" style="display: none" href="{{ file.url }}" download><i class="fas fa-cloud-download-alt"></i></a>
+                                                <a class="delete btn btn-d mt-2" style="display: none" href="{% url 'delete' file.name %}"><i class="fas fa-trash-alt"></i></a>
                                             </div> 
                                     {% endfor %}  
                                     {% endif %}

@@ -22,14 +22,16 @@ class MovieApi:
         instance.save()
 
     def create_movie_data(self, movie, user, link):
-        url = f"https://api.themoviedb.org/3/search/movie?api_key={self.api}&query={movie}"
+        m = movie.split()
+        m = "+".join(m)
+        url = f"https://api.themoviedb.org/3/search/movie?api_key={self.api}&query={m}"
         response = requests.get(url)
         response = response.json()
         for i in response["results"]:
-            if i['original_title'] == movie.title():
+            if i['original_title'] == movie:
                 movies = Movie.objects.filter(user=user)
                 if len(movies) != 0:
-                    if movie.title() not in [i.title for i in movies]:
+                    if movie not in [i.title for i in movies]:
                         self.create(i, user, link)
 
                 if len(movies) == 0:
