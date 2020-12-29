@@ -57,6 +57,8 @@
         <script src="{% static 'cloud/assets/bootstrap/js/bootstrap.min.js' %}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
         <script src="{% static 'cloud/assets/js/theme.js' %}"></script>
+        <script src="{% static 'cloud/assets/js/edit.js' %}"></script>
+        <script src="{% static 'cloud/assets/js/search.js' %}"></script>
         <script>
             function showAndHide(props){
                 var x = document.querySelectorAll(props);
@@ -112,29 +114,6 @@
                   var fileName = $(this).val().split("\\").pop();
                   $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
                 });
-            </script>
-            <script>
-                var g = document.getElementById('row');
-                
-                for (var i = 0, len = g.children.length; i < len; i++){
-                    (function(index){
-                        var span = g.getElementsByClassName('rename')[i]
-                        span.onclick = function(){
-                            var edit = g.getElementsByClassName('edit')[index]
-                            if (edit.style.display == "none"){
-                                edit.style.display = "inline-block";
-                                span.classList.remove("fa-pen-square");
-                                span.classList.add("fa-window-close");
-                            }else{
-                                edit.style.display = "none";
-                                span.classList.add("fa-pen-square");
-                                span.classList.remove("fa-window-close");
-                            }
-
-                        }    
-                    })(i);
-                }
-                
             </script>
     {% endblock %}
 </body>
