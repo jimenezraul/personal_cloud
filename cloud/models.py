@@ -67,8 +67,9 @@ class Cloud(models.Model):
     def move_to_trash(self, source):
         t = self.trash()
         os.chdir(t)
-        split_dir = self.current_dir.split("/personal_cloud/") # split dir to get just the media path
+        split_dir = self.current_dir.split("/app/") # split dir to get just the media path
         split_dir = split_dir[1]
+
         path = os.path.join(split_dir, source)
         movie = Movie.objects.filter(user=self.user)
         for i in movie:
@@ -122,7 +123,7 @@ class Cloud(models.Model):
         return current_path
 
     def get_media_root(self):
-        media = self.current_dir.split("/personal_cloud/")
+        media = self.current_dir.split("/app/")
         media = media[1]
 
         return media
@@ -145,14 +146,14 @@ class Cloud(models.Model):
                         {"name": f[i], "icon": settings.STATIC_URL + icon[i]})
         return fs
 
-    def get_folders_files(self, directories):  # Set folders and files icons
+    def get_folders_files(self, directories):
+        # Set folders and files icons
         folders = {
             "folders": [i for i in directories if "." not in i],
             # list of all directories in current path
             "files": [i for i in directories if "." in i and not i.startswith(".") and not i.endswith(
                 self.unwanted_files)]
         }  # list of all files in directory
-
         icon = []
         for i in folders['folders']:
             if i == "Trash":
@@ -163,19 +164,21 @@ class Cloud(models.Model):
         folder = self.get_f_icon(folders['folders'], icon)
 
         # List the files extension in the directory
+        
         file_extension = [os.path.splitext(i)[1] for i in folders["files"]]
 
-        icon = []
+        f_icon = []
         for i in file_extension:  # Check extension and asign an icon else default icon
             if i in self.files_icons:
-                icon.append("cloud/assets/img/" +
+                f_icon.append("cloud/assets/img/" +
                             self.icons[self.files_icons.index(i)])
             elif i in self.img_icon:
-                icon.append("")
+                f_icon.append("")
             else:
-                icon.append("cloud/assets/img/" + self.file)
+                f_icon.append("cloud/assets/img/" + self.file)
 
-        files = self.get_f_icon(folders['files'], icon)
+        files = self.get_f_icon(folders['files'], f_icon)
+      
         return files, folder
 
     def dir_save(self, *args, **kwargs):

@@ -19,14 +19,12 @@ def home_page(request):
         user = request.user
         cloud = Cloud.objects.filter(user=user)
         userId = UserId.objects.filter(user=user)
-
         if len(cloud) == 0:
             new_user = Cloud(user=user)
             new_user.save()
             return redirect('home')
         else:
             cloud = cloud[0]
-
         # If user don't have a unique id, set one and create a home dir
         if len(userId) == 0:
             query = UserId(user=user)  # create user id
@@ -60,29 +58,30 @@ def home_page(request):
             # if id not in current dir
             if uid not in cloud.current_dir.split("/"):
                 cloud.current_dir = root  # set current dir to user root dir
-
+                
         ######## instance to save current dir and id ########
         instance = Cloud.objects.get(user=user)
         instance.current_dir = cloud.current_dir
         instance.uid = uid
         instance.save()
         ######## end instance ########
-
+        
         hostname = socket.gethostname()  # get hostname
         IPAddr = socket.gethostbyname(hostname)  # get hostname IP
         total, used, free = shutil.disk_usage(cloud.home_dir)
         total = total // (2 ** 30)  # total disk space
         used = used // (2 ** 30)  # used disk space
         free = free // (2 ** 30)  # free disk space
-
+        
         os.chdir(cloud.current_dir)
         cloud.get_thumbnail()
         directories = os.listdir(cloud.current_dir)
-
+        
         folders = cloud.get_folders_files(directories)
+        
         files = folders[0]
         folders = folders[1]
-
+        
         if os.getcwd() == root:
             back = True
         else:
@@ -234,7 +233,6 @@ def upload_file(request):
 def rename(request, name):
     user = request.user
     cloud = Cloud.objects.filter(user=user)[0]
-    print(cloud.current_dir)
     if request.method == 'POST':
         new_name = request.POST['edit']
         cloud.rename(name, new_name)  
