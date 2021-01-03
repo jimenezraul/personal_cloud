@@ -265,18 +265,6 @@ body {font-family: Arial, Helvetica, sans-serif;}
   box-shadow:1px .5rem 2rem rgba(0, 0, 0, 0.2)!important;
 }
 
-.empty_trash{
-  background-color: rgb(255, 255, 255);
-  position: absolute;
-  padding: 15px;
-  border-radius: 5px;
-  min-height: 100px;
-  right: 150px;
-  bottom: -40px;
-  box-shadow:1px .5rem 2rem rgba(0, 0, 0, 0.2)!important;
-  position: absolute;
-}
-
 .btn-confirm {
   position: relative;
   display: block!important;
@@ -297,16 +285,129 @@ body {font-family: Arial, Helvetica, sans-serif;}
   position: relative;
 }
 
-.create-block:after, .trash-block:after {
-  content: "";
-  position: absolute;
-  border-left: 20px solid white;
-  border-bottom: 20px solid transparent;
-  border-top: 20px solid transparent;
-  height: 0px;
-  width: 0px;
-  top: 15px;
-  right: -30px; 
+@media (min-width: 320px) {
+  .empty_trash{
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    padding: 15px;
+    border-radius: 5px;
+    min-height: 100px;
+    right: 0;
+    bottom: 72px;
+    box-shadow:1px .5rem 2rem rgba(0, 0, 0, 0.2)!important;
+    position: absolute;
+  }
+  
+  .create_folder{
+    position: absolute;
+    bottom: 65px;
+    right: 0px;
+  }
+  
+  .create-block:after, .trash-block:after {
+    content: "";
+    position: absolute;
+    border-top: 20px solid white;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    height: 0px;
+    width: 0px;
+    bottom: -30px;
+    right: 65px; 
+  }
+}
+@media (min-width: 375px) {
+  .empty_trash{
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    padding: 15px;
+    border-radius: 5px;
+    min-height: 100px;
+    right: 12px;
+    bottom: 72px;
+    box-shadow:1px .5rem 2rem rgba(0, 0, 0, 0.2)!important;
+    position: absolute;
+  }
+
+  .create_folder{
+    position: absolute;
+    bottom: 65px;
+    right: 12px;
+  }
+  
+  .create-block:after, .trash-block:after {
+    content: "";
+    position: absolute;
+    border-top: 20px solid white;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    height: 0px;
+    width: 0px;
+    bottom: -30px;
+    right: 40px; 
+  }
+}
+
+@media (min-width: 414px) {
+  .empty_trash{
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    padding: 15px;
+    border-radius: 5px;
+    min-height: 100px;
+    right: 32px;
+    bottom: 72px;
+    box-shadow:1px .5rem 2rem rgba(0, 0, 0, 0.2)!important;
+    position: absolute;
+  }
+
+  .create_folder{
+    position: absolute;
+    bottom: 65px;
+    right: 30px;
+  }
+  
+  .create-block:after, .trash-block:after {
+    content: "";
+    position: absolute;
+    border-top: 20px solid white;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    height: 0px;
+    width: 0px;
+    bottom: -30px;
+    right: 20px; 
+  }
+}
+
+@media (min-width: 720px) {
+  .empty_trash{
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    padding: 15px;
+    border-radius: 5px;
+    min-height: 100px;
+    right: 150px;
+    bottom: -40px;
+    box-shadow:1px .5rem 2rem rgba(0, 0, 0, 0.2)!important;
+  }
+  .create_folder{
+    position: absolute;
+    bottom: -47px;
+    right: 150px;
+  }
+  
+  .create-block:after, .trash-block:after {
+    content: "";
+    position: absolute;
+    border-left: 20px solid white;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    height: 0px;
+    width: 0px;
+    bottom: 15px;
+    right: -50px; 
+  }
 }
 
 .movie{
@@ -335,28 +436,104 @@ body {font-family: Arial, Helvetica, sans-serif;}
   color: #3ec4fe!important;
 }
 
-.uploader{
-  position: absolute;
-  z-index: 5;
-  top: 65px;
-  right: 47px;
-  min-height: 100px;
-  border-radius: 5px;
-  width: 400px;
-  background-color: #ffffff;
-  box-shadow:0px .2rem 2rem rgba(0, 0, 0, 0.2)!important;
+@media (min-width: 320px) {
+  .uploader{
+    position: absolute;
+    z-index: 5;
+    top: 65px;
+    right: -20px;
+    min-height: 100px;
+    border-radius: 5px;
+    width: 310px;
+    background-color: #ffffff;
+    box-shadow:0px .2rem 2rem rgba(0, 0, 0, 0.2)!important;
+  }
+  .uploader:after {
+    content: "";
+    position: absolute;
+    border-bottom: 20px solid rgb(255, 255, 255);
+    border-right: 20px solid transparent;
+    border-left: 20px solid transparent;
+    height: 0px;
+    width: 0px;
+    top: -15px;
+    right: 77px; 
+  }
 }
 
-.uploader:after {
-  content: "";
-  position: absolute;
-  border-bottom: 20px solid rgb(255, 255, 255);
-  border-right: 20px solid transparent;
-  border-left: 20px solid transparent;
-  height: 0px;
-  width: 0px;
-  top: -15px;
-  right: 17px; 
+@media (min-width: 375px) {
+  .uploader{
+    position: absolute;
+    z-index: 5;
+    top: 65px;
+    right: -15px;
+    min-height: 100px;
+    border-radius: 5px;
+    width: 355px;
+    background-color: #ffffff;
+    box-shadow:0px .2rem 2rem rgba(0, 0, 0, 0.2)!important;
+  }
+  .uploader:after {
+    content: "";
+    position: absolute;
+    border-bottom: 20px solid rgb(255, 255, 255);
+    border-right: 20px solid transparent;
+    border-left: 20px solid transparent;
+    height: 0px;
+    width: 0px;
+    top: -15px;
+    right: 77px; 
+  }
+}
+
+@media (min-width: 414px) {
+  .uploader{
+    position: absolute;
+    z-index: 5;
+    top: 65px;
+    right: -15px;
+    min-height: 100px;
+    border-radius: 5px;
+    width: 390px;
+    background-color: #ffffff;
+    box-shadow:0px .2rem 2rem rgba(0, 0, 0, 0.2)!important;
+  }
+  .uploader:after {
+    content: "";
+    position: absolute;
+    border-bottom: 20px solid rgb(255, 255, 255);
+    border-right: 20px solid transparent;
+    border-left: 20px solid transparent;
+    height: 0px;
+    width: 0px;
+    top: -15px;
+    right: 77px; 
+  }
+}
+
+@media (min-width: 720px) {
+  .uploader{
+    position: absolute;
+    z-index: 5;
+    top: 65px;
+    right: 47px;
+    min-height: 100px;
+    border-radius: 5px;
+    width: 400px;
+    background-color: #ffffff;
+    box-shadow:0px .2rem 2rem rgba(0, 0, 0, 0.2)!important;
+  }
+  .uploader:after {
+    content: "";
+    position: absolute;
+    border-bottom: 20px solid rgb(255, 255, 255);
+    border-right: 20px solid transparent;
+    border-left: 20px solid transparent;
+    height: 0px;
+    width: 0px;
+    top: -15px;
+    right: 17px; 
+  }
 }
 
 .trash{

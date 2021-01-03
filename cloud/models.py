@@ -205,8 +205,10 @@ class Cloud(models.Model):
         filename, file_extension = os.path.splitext(os.path.join(self.current_dir, old_name))
         os.rename(os.path.join(self.current_dir, old_name),
                         os.path.join(self.current_dir, new_name + file_extension))
-        os.rename(os.path.join(self.current_dir, "T_" + old_name),
-                        os.path.join(self.current_dir, "T_" + new_name + file_extension))
+        print(os.path.exists(os.path.join(self.current_dir, "T_" + old_name)))
+        if os.path.exists(os.path.join(self.current_dir, "T_" + old_name)):
+            os.rename(os.path.join(self.current_dir, "T_" + old_name),
+                            os.path.join(self.current_dir, "T_" + new_name + file_extension))
         
 ######################## End Cloud model ########################
 

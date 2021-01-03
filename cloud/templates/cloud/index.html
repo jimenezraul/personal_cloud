@@ -73,15 +73,15 @@
                                         <div class="text-uppercase text-info font-weight-bold text-xs mb-1"><span>Hard Drive</span></div>
                                         <div class="row no-gutters align-items-center">
                                             <div class="col-auto">
-                                                <div class="text-dark font-weight-bold h5 mb-0 mr-3"><span>{{ used }}GB</span></div>
+                                                <div class="text-dark font-weight-bold h5 mb-0 mr-3"><span>{{ used }}{{used_space}}</span></div>
                                             </div>
                                             <div class="col">
                                                 <div class="progress progress-sm">
-                                                    <div class="progress-bar bg-info" aria-valuenow="{{used}}" aria-valuemin="0" aria-valuemax="100" style="width: 50%;"><span class="sr-only">50%</span></div>
+                                                    <div class="progress-bar bg-info" aria-valuenow="{{used}}" aria-valuemin="0" aria-valuemax="100" style="width: {{percent}}%;"><span class="sr-only">{{percent}}%</span></div>
                                                 </div>
                                             </div>
                                             <div class="col-auto ml-3">
-                                                <div class="text-dark font-weight-bold h5 mb-0"><span>{{ total }}GB</span></div>
+                                                <div class="text-dark font-weight-bold h5 mb-0"><span>{{ total }}{{total_space}}</span></div>
                                             </div>
                                         </div>
                                     </div>
@@ -104,7 +104,7 @@
                                             <div class="col-12">
                                                 <h4><strong>Upload File</strong></h4>
                                             </div>
-                                            <div class="custom-file col-9">
+                                            <div class="custom-file col-8 col-md-9">
                                             <input type="file" class="custom-file-input" id="customFile" name="file">
                                             <label class="custom-file-label" for="customFile">Choose file</label>
                                             </div>

@@ -11,6 +11,14 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .movieapi import MovieApi
+from math import pi
+
+def get_gb(size):
+    tb = size / 1024
+    tb_total = '{0:.1f}'.format(tb)
+    total = tb_total
+    total_space = "TB"
+    return total, total_space
 
 
 @login_required(login_url='login')
@@ -72,7 +80,8 @@ def home_page(request):
         total = total // (2 ** 30)  # total disk space
         used = used // (2 ** 30)  # used disk space
         free = free // (2 ** 30)  # free disk space
-        
+        total_space = "GB"
+        used_space = "GB"
         os.chdir(cloud.current_dir)
         cloud.get_thumbnail()
         directories = os.listdir(cloud.current_dir)
@@ -87,6 +96,15 @@ def home_page(request):
         else:
             back = False
         percent = int((used / total) * 100)
+
+        if total >= 1024:
+            total_space = get_gb(total)[1]
+            total = get_gb(total)[0]
+
+        if used >= 1024:
+            used_space = get_gb(used)[1]
+            used = get_gb(used)[0]
+
         media = cloud.get_media_root()
         trash = cloud.trash()
         trash_count = len([name for name in os.listdir(
@@ -115,6 +133,8 @@ def home_page(request):
             "current_path": media,
             "trash_count": trash_count,
             "movies": movies,
+            "total_space": total_space,
+            "used_space": used_space,
         }
         return render(request, "cloud/index.html", context)
     except BaseException as e:
