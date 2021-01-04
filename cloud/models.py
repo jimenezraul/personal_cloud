@@ -5,6 +5,7 @@ import uuid
 import shutil
 import glob
 from PIL import Image
+from .encryption import *
 
 
 ######################## User Unique ID ########################
@@ -107,9 +108,24 @@ class Cloud(models.Model):
                 print('Failed to delete %s. Reason: %s' % (file_path, e))
 
     def open_directory(self, open_folder):
+        # directories = os.path.join(self.current_dir, open_folder)
+        # files = os.listdir(directories)
+        # key = load_key(self.get_root())[0]
+        # iv= load_key(self.get_root())[1]
+        # if files:
+        #     for file in files:
+        #         decrypt(directories + "/" + file, key, iv)
+        #         print(file)
         return os.path.join(self.current_dir, open_folder)
 
     def go_back(self):
+        print(load_key(self.get_root()))
+        # files = os.listdir(self.current_dir)
+        # key = load_key(self.get_root())[0]
+        # iv= load_key(self.get_root())[1]
+        # if files:
+        #     for file in files:
+        #         encrypt(self.current_dir + "/" + file, key)
         current_path = self.current_dir.split("/")  # split current directory
         current_path.pop()  # last string deleted from split
         if current_path:
@@ -127,6 +143,12 @@ class Cloud(models.Model):
         media = media[1]
 
         return media
+
+    def get_root(self):
+        root = self.current_dir.split("/media/")
+        root = root[0]
+
+        return root
 
     # Get folders and files in a dictionary [Name and Icon url]
     def get_f_icon(self, f, icon):

@@ -27,12 +27,17 @@ def home_page(request):
         user = request.user
         cloud = Cloud.objects.filter(user=user)
         userId = UserId.objects.filter(user=user)
+
         if len(cloud) == 0:
             new_user = Cloud(user=user)
             new_user.save()
             return redirect('home')
         else:
             cloud = cloud[0]
+
+        if cloud.current_dir != cloud.user_root:
+            print("yes")
+
         # If user don't have a unique id, set one and create a home dir
         if len(userId) == 0:
             query = UserId(user=user)  # create user id
@@ -85,7 +90,6 @@ def home_page(request):
         os.chdir(cloud.current_dir)
         cloud.get_thumbnail()
         directories = os.listdir(cloud.current_dir)
-        
         folders = cloud.get_folders_files(directories)
         
         files = folders[0]
