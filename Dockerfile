@@ -6,6 +6,8 @@ WORKDIR /app
 
 RUN mkdir /app/media
 
+RUN mkdir /app/media/cloud
+
 ADD . /app
 
 COPY ./requirements.txt /app/requirements.txt
@@ -13,7 +15,5 @@ COPY ./requirements.txt /app/requirements.txt
 RUN pip install -r requirements.txt
 
 COPY . /app
-
-CMD [ "/app/runserver.sh" ]
 
 

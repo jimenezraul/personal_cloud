@@ -119,7 +119,6 @@ class Cloud(models.Model):
         return os.path.join(self.current_dir, open_folder)
 
     def go_back(self):
-        print(load_key(self.get_root()))
         # files = os.listdir(self.current_dir)
         # key = load_key(self.get_root())[0]
         # iv= load_key(self.get_root())[1]
