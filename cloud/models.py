@@ -4,9 +4,31 @@ import os
 import uuid
 import shutil
 import glob
-from PIL import Image
+from PIL import Image, ExifTags
 from .encryption import *
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
+######################## image rotation ########################
+def rotate_image(filepath):
+  try:
+    image = Image.open(filepath)
+    for orientation in ExifTags.TAGS.keys():
+      if ExifTags.TAGS[orientation] == 'Orientation':
+            break
+    exif = dict(image._getexif().items())
+
+    if exif[orientation] == 3:
+        image = image.rotate(180, expand=True)
+    elif exif[orientation] == 6:
+        image = image.rotate(270, expand=True)
+    elif exif[orientation] == 8:
+        image = image.rotate(90, expand=True)
+    image.save(filepath)
+    image.close()
+  except (AttributeError, KeyError, IndexError):
+    # cases: image don't have getexif
+    pass
 
 ######################## User Unique ID ########################
 class UserId(models.Model):
@@ -36,7 +58,7 @@ class Cloud(models.Model):
     unwanted_files = ('.download',)
     files_icons = ['.mp3', '.mp4', ".m4v", ".pdf"]
     videos_files = [".mp4", ".m4v", ".mov", ".mkv"]
-    img_icon = ['.jpg', '.png']
+    img_icon = ['.jpg', '.png', ".jpeg", ".gif"]
     file = 'file.svg'
     icons = [
         'audio.svg',
@@ -272,3 +294,15 @@ class Upload(models.Model):
     document = models.FileField(upload_to=user_directory_path, max_length=1000)
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
+@receiver(post_save, sender=Upload, dispatch_uid="update_image_profile")
+def update_image(sender, instance, **kwargs):
+    try:
+        if instance.document:
+            BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            print("print" + BASE_DIR)
+            print("print" + instance.document.url)
+            image = instance.document.url.split("/media/")
+            fullpath = BASE_DIR + "/media/" + image[2]
+            rotate_image(fullpath)
+    except:
+        pass

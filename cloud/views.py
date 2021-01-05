@@ -176,6 +176,7 @@ def go_back_home(request):
     back_home = settings.MEDIA_ROOT + "/cloud" + database
     instance = Cloud.objects.get(user=user)
     instance.current_dir = back_home
+    instance.dir_name = database
     instance.save()
     return redirect("home")
 
